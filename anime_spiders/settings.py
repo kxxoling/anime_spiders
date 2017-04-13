@@ -64,9 +64,10 @@ EXTENSIONS = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'anime_spiders.pipelines.SomePipeline': 300,
-# }
+ITEM_PIPELINES = {
+    'anime_spiders.pipelines.FilesPipeline': 100,
+}
+FILES_STORE = '.storage/'
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html

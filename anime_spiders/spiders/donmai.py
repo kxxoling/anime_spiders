@@ -5,6 +5,8 @@ import datetime
 
 from scrapy import Spider, Request
 
+from anime_spiders.items import CG
+
 
 class DonmaiHotSpider(Spider):
     name = 'donmai_hot'
@@ -19,7 +21,7 @@ class DonmaiHotSpider(Spider):
         if not posts:
             return
         for p in posts:
-            yield dict(
+            yield CG(
                 large_file_url=p.xpath(
                     'large-file-url/text()').extract_first(),
                 file_url=p.xpath('file-url/text()').extract_first(),
@@ -54,7 +56,7 @@ class DonmaiMonthlyPopilarSpider(Spider):
 
     def parse(self, rsp):
         for p in rsp.xpath('//posts/post'):
-            yield dict(
+            yield CG(
                 large_file_url=p.xpath(
                     'large-file-url/text()').extract_first(),
                 file_url=p.xpath('file-url/text()').extract_first(),

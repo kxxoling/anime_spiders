@@ -16,6 +16,9 @@ class Torrent(Item):
     author = Field()
     category = Field()
 
+    def get_file_urls(self):
+        return [self['torrent']]
+
 
 class Anime(Item):
     id = Field()
@@ -24,6 +27,9 @@ class Anime(Item):
     name = Field()
     orig_name = Field()
     pub_date = Field()
+
+    def get_file_urls(self):
+        return [self['cover']]
 
 
 class CG(Item):
@@ -34,6 +40,9 @@ class CG(Item):
     tags_string = Field()
     md5 = Field()
     pixiv_id = Field()
+
+    def get_file_urls(self):
+        return [self['large_file_url'], self['file_url']]
 
 
 class ShortVideo(Item):
@@ -47,3 +56,6 @@ class ShortVideo(Item):
     source = Field()
     score = Field()
     file_ext = Field()
+
+    def get_file_urls(self):
+        return [self['file_url'], self['preview_url']]

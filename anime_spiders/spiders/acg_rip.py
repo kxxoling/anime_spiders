@@ -1,5 +1,6 @@
 # coding: utf-8
 from scrapy import Spider, Request
+from anime_spiders.items import Torrent
 
 
 class AcgRipSpider(Spider):
@@ -35,7 +36,8 @@ class AcgRipSpider(Spider):
                 size_num = float(size.replace(' MB', ''))
             elif 'GB' in size:
                 size_num = float(size.replace(' GB', '')) * 1024
-            yield dict(
+
+            yield Torrent(
                 id=topic_id,
                 title=title,
                 team_name=team_name,

@@ -4,6 +4,8 @@ from urlparse import urlparse, parse_qs
 
 from scrapy import Spider, Request
 
+from anime_spiders.items import Anime
+
 
 class BangumiSpider(Spider):
     name = 'bangumi'
@@ -19,7 +21,7 @@ class BangumiSpider(Spider):
         for s in subjects:
             link = s.xpath('a/@href').extract_first()
             subject_id = int(link.replace('/subject/', ''))
-            yield dict(
+            yield Anime(
                 id=subject_id,
                 link=link,
                 cover=s.xpath('a/span/img[@class="cover"]/@src')

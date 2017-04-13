@@ -100,5 +100,9 @@ ENV/
 .idea
 db.sqlite3
 
-pop.json
+# tmp files
+**.json
+
+# Storage dir
+.storage
 

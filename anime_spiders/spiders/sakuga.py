@@ -3,6 +3,7 @@ from urllib import urlencode
 from urlparse import urlparse, parse_qs
 
 from scrapy import Spider, Request
+from anime_spiders.items import ShortVideo
 
 
 class SakugaSpider(Spider):
@@ -17,7 +18,7 @@ class SakugaSpider(Spider):
         if not posts:
             return
         for p in posts:
-            yield dict(
+            item = ShortVideo(
                 id=int(p.xpath('@id').extract_first()),
                 md5=p.xpath('@md5').extract_first(),
                 preview_url=p.xpath('@preview_url').extract_first(),
@@ -29,6 +30,7 @@ class SakugaSpider(Spider):
                 score=int(p.xpath('@score').extract_first()),
                 file_ext=p.xpath('@file_ext').extract_first(),
             )
+            yield item
 
         next_url = self.get_next_url(rsp)
         yield Request(next_url, callback=self.parse)

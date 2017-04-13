@@ -22,7 +22,8 @@ class BangumiSpider(Spider):
             link = s.xpath('a/@href').extract_first()
             subject_id = int(link.replace('/subject/', ''))
             yield Anime(
-                id=subject_id,
+                crawled_from='bangumi.tv',
+                site_pk=subject_id,
                 link=link,
                 cover=s.xpath('a/span/img[@class="cover"]/@src')
                        .extract_first(),
@@ -46,3 +47,6 @@ class BangumiSpider(Spider):
         next_url = '{}?{}'.format(self.base_url,
                                   urlencode(dict(sort='date', page=page)))
         return next_url
+
+    def get_full_url(self, url):
+        return 'http:%s' % url

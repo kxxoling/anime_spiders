@@ -38,7 +38,8 @@ class AcgRipSpider(Spider):
                 size_num = float(size.replace(' GB', '')) * 1024
 
             yield Torrent(
-                id=topic_id,
+                crawled_from='acg.rip',
+                site_pk=topic_id,
                 title=title,
                 team_name=team_name,
                 team_id=team_id,
@@ -54,3 +55,6 @@ class AcgRipSpider(Spider):
         page = int(current_url.replace('https://acg.rip/page/', ''))
         next_url = '{}page/{}'.format(self.base_url, page+1)
         return next_url
+
+    def get_full_url(self, url):
+        return u'https://acg.rip%s' % url

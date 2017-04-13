@@ -2,6 +2,12 @@
 import os
 
 import requests
+import django
+
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "exhibition.settings")
+
+django.setup()
 
 
 class FilesPipeline(object):
@@ -13,6 +19,7 @@ class FilesPipeline(object):
         for file_url in file_urls:
             if not file_url:
                 continue
+            file_url = spider.get_full_url(file_url)
             file_name = file_url.rsplit('/', 1)[-1]
             file_dir = os.path.join('.storage', spider.name)
 
@@ -28,4 +35,10 @@ class FilesPipeline(object):
                 for chunk in requests.get(file_url).iter_content(chunk_size=1024):
                     if chunk:
                         f.write(chunk)
+        return item
+
+
+class DjangoItemPipeline(object):
+    def process_item(self, item, spider):
+        item.save()
         return item

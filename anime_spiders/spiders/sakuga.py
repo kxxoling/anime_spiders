@@ -19,7 +19,8 @@ class SakugaSpider(Spider):
             return
         for p in posts:
             item = ShortVideo(
-                id=int(p.xpath('@id').extract_first()),
+                crawled_from='sakugabooru.com',
+                site_pk=int(p.xpath('@id').extract_first()),
                 md5=p.xpath('@md5').extract_first(),
                 preview_url=p.xpath('@preview_url').extract_first(),
                 file_url=p.xpath('@file_url').extract_first(),
@@ -42,3 +43,6 @@ class SakugaSpider(Spider):
         args['page'] = int(args['page'][0]) + 1
         next_url = '{}?{}'.format(self.base_url, urlencode(args))
         return next_url
+
+    def get_full_url(self, url):
+        return url

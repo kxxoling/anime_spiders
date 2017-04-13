@@ -20,17 +20,17 @@
             "version": "==1.10.0",
             "hash": "sha256:b560916546b2f209d74b82bdbc3223cee9a165b0242fa00a06dfc48a2054864a"
         },
-        "idna": {
-            "version": "==2.5",
-            "hash": "sha256:cc19709fd6d0cbfed39ea875d29ba6d4e22c0cebc510a76d6302a28385e8bb70"
+        "Twisted": {
+            "version": "==17.1.0",
+            "hash": "sha256:dbf211d70afe5b4442e3933ff01859533eba9f13d8b3e2e1b97dc2125e2d44dc"
         },
         "w3lib": {
             "version": "==1.17.0",
             "hash": "sha256:562373c5f7aab03e742ddcca5a5eb37ebd324a9f5403b2eccf610c211fad1eac"
         },
-        "Twisted": {
-            "version": "==17.1.0",
-            "hash": "sha256:dbf211d70afe5b4442e3933ff01859533eba9f13d8b3e2e1b97dc2125e2d44dc"
+        "Django": {
+            "version": "==1.11",
+            "hash": "sha256:0120b3b60760fb0617848b58aaa9702c0bf963320ed472f0879c5c55ab75b64a"
         },
         "packaging": {
             "version": "==16.8",
@@ -48,13 +48,17 @@
             "version": "==16.3.0",
             "hash": "sha256:c59426b15b45e39a7bc408eb6ba7e7188d9532764f873cc691199ddd975c97ef"
         },
+        "pyasn1-modules": {
+            "version": "==0.0.8",
+            "hash": "sha256:6c955210b86fcff3420957072280560ddaf183aa761fb76240c20c322e01021d"
+        },
+        "python-dateutil": {
+            "version": "==2.6.0",
+            "hash": "sha256:537bf2a8f8ce6f6862ad705cd68f9e405c0b5db014aa40fa29eab4335d4b1716"
+        },
         "pyparsing": {
             "version": "==2.2.0",
             "hash": "sha256:fee43f17a9c4087e7ed1605bd6df994c6173c1e977d7ade7b651292fab2bd010"
-        },
-        "Django": {
-            "version": "==1.11",
-            "hash": "sha256:0120b3b60760fb0617848b58aaa9702c0bf963320ed472f0879c5c55ab75b64a"
         },
         "ipaddress": {
             "version": "==1.0.18",
@@ -68,6 +72,10 @@
             "version": "==1.4.3",
             "hash": "sha256:d8b24664561d0d34ddfaec54636d502d7cea6e29c3eaf68f3df6180863e2166e"
         },
+        "scrapy-djangoitem": {
+            "version": "==1.1.1",
+            "hash": "sha256:58da093778f2cd92734b5539adcb60d59854475050d7511c42173bd8c104acef"
+        },
         "lxml": {
             "version": "==3.7.3",
             "hash": "sha256:aa502d78a51ee7d127b4824ff96500f0181d3c7826e6ee7b800d068be79361c7"
@@ -76,9 +84,9 @@
             "version": "==1.1.6",
             "hash": "sha256:6bd0f6ad48ec2aa117d3d141940d484deccda84d4fcd884f5c3d93c23ecd8c79"
         },
-        "pyasn1-modules": {
-            "version": "==0.0.8",
-            "hash": "sha256:6c955210b86fcff3420957072280560ddaf183aa761fb76240c20c322e01021d"
+        "idna": {
+            "version": "==2.5",
+            "hash": "sha256:cc19709fd6d0cbfed39ea875d29ba6d4e22c0cebc510a76d6302a28385e8bb70"
         },
         "constantly": {
             "version": "==15.1.0",
@@ -139,7 +147,7 @@
         ],
         "requires": {},
         "hash": {
-            "sha256": "8a5e15d9156211cbb148147098303f74bf94788e3710666d863ef2d16c0f9bde"
+            "sha256": "ed5b019ef67fd089a178d3fc95b9eaaa0c5269beb85be678c834cc3b1ea2fd2b"
         }
     }
 }

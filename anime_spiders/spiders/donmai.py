@@ -13,6 +13,9 @@ class DonmaiHotSpider(Spider):
     start_urls = [
         'http://danbooru.donmai.us/posts.xml?page=1&tags=order%3Arank',
     ]
+    custom_settings = {
+        'ROBOTSTXT_OBEY': False,
+    }
     base_url = 'http://danbooru.donmai.us/posts.xml'
     tags = 'order:rank'
 
@@ -22,11 +25,12 @@ class DonmaiHotSpider(Spider):
             return
         for p in posts:
             yield CG(
+                crawled_from='danbooru.donmai.us',
+                site_pk=int(p.xpath('id/text()').extract_first()),
                 large_file_url=p.xpath(
                     'large-file-url/text()').extract_first(),
                 file_url=p.xpath('file-url/text()').extract_first(),
                 source=p.xpath('source/text()').extract_first(),
-                id=int(p.xpath('id/text()').extract_first()),
                 tags_string=p.xpath('tag-string/text()').extract_first(),
                 md5=p.xpath('md5/text()').extract_first(),
                 pixiv_id=p.xpath('pixiv-id/text()').extract_first(),
@@ -45,6 +49,9 @@ class DonmaiHotSpider(Spider):
         next_url = '{}?{}'.format(self.base_url, urlencode(new_args))
         return next_url
 
+    def get_full_url(self, url):
+        return u'http://danbooru.donmai.us%s' % url
+
 
 class DonmaiMonthlyPopilarSpider(Spider):
     name = 'donmai_monthly_pop'
@@ -52,16 +59,20 @@ class DonmaiMonthlyPopilarSpider(Spider):
         'http://danbooru.donmai.us/explore/posts/popular.xml'
         '?date=%s&scale=month' % datetime.datetime.now().date().isoformat(),
     ]
+    custom_settings = {
+        'ROBOTSTXT_OBEY': False,
+    }
     base_url = 'http://danbooru.donmai.us/posts.xml'
 
     def parse(self, rsp):
         for p in rsp.xpath('//posts/post'):
             yield CG(
+                crawled_from='danbooru.donmai.us',
+                site_pk=int(p.xpath('id/text()').extract_first()),
                 large_file_url=p.xpath(
                     'large-file-url/text()').extract_first(),
                 file_url=p.xpath('file-url/text()').extract_first(),
                 source=p.xpath('source/text()').extract_first(),
-                id=int(p.xpath('id/text()').extract_first()),
                 tags_string=p.xpath('tag-string/text()').extract_first(),
                 md5=p.xpath('md5/text()').extract_first(),
                 pixiv_id=p.xpath('pixiv-id/text()').extract_first(),

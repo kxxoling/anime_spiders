@@ -1,10 +1,25 @@
 # -*- coding: utf-8 -*-
-from scrapy import Item, Field
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "exhibition.settings")
+import django       # noqa
+django.setup()
+
+from scrapy import Field                    # noqa
+from scrapy_djangoitem import DjangoItem    # noqa
+
+from exhibition import models               # noqa
 
 
-class Torrent(Item):
+class BasicItem(DjangoItem):
+    pass
+
+
+class Torrent(BasicItem):
+    django_model = models.Torrent
+
+    crawled_from = Field()
     site = Field()
-    id = Field()
+    site_pk = Field()
     title = Field()
     team_name = Field()
     team_id = Field()
@@ -20,8 +35,11 @@ class Torrent(Item):
         return [self['torrent']]
 
 
-class Anime(Item):
-    id = Field()
+class Anime(BasicItem):
+    django_model = models.Anime
+
+    crawled_from = Field()
+    site_pk = Field()
     link = Field()
     cover = Field()
     name = Field()
@@ -32,11 +50,14 @@ class Anime(Item):
         return [self['cover']]
 
 
-class CG(Item):
+class CG(BasicItem):
+    django_model = models.CG
+
+    crawled_from = Field()
     large_file_url = Field()
     file_url = Field()
     source = Field()
-    id = Field()
+    site_pk = Field()
     tags_string = Field()
     md5 = Field()
     pixiv_id = Field()
@@ -45,8 +66,11 @@ class CG(Item):
         return [self['large_file_url'], self['file_url']]
 
 
-class ShortVideo(Item):
-    id = Field()
+class ShortVideo(BasicItem):
+    django_model = models.ShortVideo
+
+    crawled_from = Field()
+    site_pk = Field()
     md5 = Field()
     preview_url = Field()
     file_url = Field()

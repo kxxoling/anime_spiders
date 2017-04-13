@@ -4,5 +4,7 @@ verify_ssl = true
 
 [packages]
 requests = "*"
+scrapy-djangoitem = "*"
+python-dateutil = "*"
 Scrapy = "*"
 Django = "*"

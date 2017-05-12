@@ -106,7 +106,6 @@ db.sqlite3
 # Storage dir
 .storage
 
-.DS_Store
 node_modules/
 dist/
 npm-debug.log*

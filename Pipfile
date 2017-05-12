@@ -2,9 +2,14 @@
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 
+[dev-packages]
+Markdown = "*"
+
 [packages]
 requests = "*"
 scrapy-djangoitem = "*"
 python-dateutil = "*"
+djangorestframework = "*"
 Scrapy = "*"
 Django = "*"
+django-filter = "*"

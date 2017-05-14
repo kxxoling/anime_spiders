@@ -32,7 +32,8 @@ class Torrent(BasicItem):
     category = Field()
 
     def get_file_urls(self):
-        return [self['torrent']]
+        torrent = getattr(self, 'torrent', None)
+        return [torrent] if torrent else []
 
 
 class Anime(BasicItem):

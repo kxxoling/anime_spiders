@@ -16,3 +16,5 @@ indent_style = tab
 indent_style = space
 indent_size = 2
 
+[*.js,*.vue,*.styl,*.css]
+indent_size = 2

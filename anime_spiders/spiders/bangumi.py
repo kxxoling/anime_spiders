@@ -21,12 +21,14 @@ class BangumiSpider(Spider):
         for s in subjects:
             link = s.xpath('a/@href').extract_first()
             subject_id = int(link.replace('/subject/', ''))
+            cover = s.xpath('a/span/img[@class="cover"]/@src')\
+                    .extract_first()
+            cover = cover.replace('/cover/s', '/cover/l') if cover else None
             yield Anime(
                 crawled_from='bangumi.tv',
                 site_pk=subject_id,
                 link=link,
-                cover=s.xpath('a/span/img[@class="cover"]/@src')
-                       .extract_first(),
+                cover=cover,
                 name=s.xpath('div[@class="inner"]/h3/a/text()')
                        .extract_first(),
                 orig_name=s.xpath('div[@class="inner"]/h3/small/text()')

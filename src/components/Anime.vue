@@ -1,9 +1,17 @@
 <template lang="jade">
 .anime
-  a(v-bind:href="site_link", target="_blank")
+  figure.cover
     img(v-bind:src="anime.cover")
-    span {{ anime.name }}
-    span （{{ anime.orig_name }}）
+  div.desc
+    div
+      a(v-bind:href="site_link", target="_blank")
+        span {{ anime.name }}
+    div(v-if="anime.orig_name")
+      label 原名：
+      span （{{ anime.orig_name }}）
+    div
+      label 发布日期：
+      span {{ anime. pub_date}}
 </template>
 
 <script>
@@ -23,5 +31,19 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.anime
+  height 14rem
+  width 24rem
+  display flex
+  border 1px solid #ccc
+  padding 1rem
 
+  .cover
+    display flex
+    align-items center
+  .desc
+    margin-left 1rem
+
+    &>div
+      margin-bottom 1rem
 </style>

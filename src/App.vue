@@ -16,5 +16,8 @@ export default {
 };
 </script>
 
-<style>
+<style lang="stylus">
+figure
+  margin 0
+  padding 0
 </style>

@@ -13,6 +13,12 @@ class BangumiSpider(Spider):
         'http://bangumi.tv/anime/browser/?sort=date&page=1',
     ]
     base_url = 'http://bangumi.tv/anime/browser/'
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.BangumiTVCoverPipeline': 100,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        }
+    }
 
     def parse(self, rsp):
         subjects = rsp.xpath('//ul[@id="browserItemList"]/li')

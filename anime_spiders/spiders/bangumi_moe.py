@@ -12,8 +12,13 @@ class BangumiMoeFeedSpider(XMLFeedSpider):
         'https://bangumi.moe/rss/latest',
     ]
     itertag = 'item'
+
     custom_settings = {
         'ROBOTSTXT_OBEY': False,
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.TorrentDownloadPipeline': 100,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        },
     }
 
     def parse_node(self, rsp, node):

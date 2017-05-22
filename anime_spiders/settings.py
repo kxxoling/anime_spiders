@@ -65,7 +65,6 @@ EXTENSIONS = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'anime_spiders.pipelines.FilesPipeline': 100,
     'anime_spiders.pipelines.DjangoItemPipeline': 200,
 }
 FILES_STORE = '.storage/'

@@ -13,6 +13,10 @@ class DmhyRssSpider(Spider):
 
     custom_settings = {
         'ROBOTSTXT_OBEY': False,
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.TorrentDownloadPipeline': 100,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        },
     }
 
     def parse(self, rsp):

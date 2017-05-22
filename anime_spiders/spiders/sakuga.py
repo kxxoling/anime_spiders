@@ -13,6 +13,13 @@ class SakugaSpider(Spider):
     ]
     base_url = 'https://sakugabooru.com/post.xml'
 
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.ShortVideoDownloadPipeline': 100,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        },
+    }
+
     def parse(self, rsp):
         posts = rsp.xpath('//posts/post')
         if not posts:

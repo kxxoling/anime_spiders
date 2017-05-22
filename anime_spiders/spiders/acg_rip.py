@@ -10,6 +10,13 @@ class AcgRipSpider(Spider):
     ]
     base_url = 'https://acg.rip/'
 
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.TorrentDownloadPipeline': 100,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        },
+    }
+
     def parse(self, rsp):
         items = rsp.xpath('//table/tr')
         if not items:

@@ -31,6 +31,8 @@ class Torrent(Model):
     author = CharField(max_length=50)
     category = CharField(max_length=50)
 
+    torrent_path = CharField(max_length=100, null=True)
+
     def __unicode__(self):
         return '%s - %s' % (super(Torrent, self).__unicode__(), self.title)
 
@@ -53,6 +55,8 @@ class Anime(Model):
     orig_name = CharField(max_length=100, null=True)
     pub_date = CharField(max_length=100)
 
+    cover_path = CharField(max_length=100, null=True)
+
 
 class ShortVideo(Model):
 
@@ -64,3 +68,6 @@ class ShortVideo(Model):
     source = CharField(max_length=100)
     score = IntegerField()
     file_ext = CharField(max_length=10)
+
+    file_path = CharField(max_length=100, null=True)
+    preview_path = CharField(max_length=100, null=True)

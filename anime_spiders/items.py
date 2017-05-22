@@ -31,9 +31,7 @@ class Torrent(BasicItem):
     author = Field()
     category = Field()
 
-    def get_file_urls(self):
-        torrent = getattr(self, 'torrent', None)
-        return [torrent] if torrent else []
+    torrent_path = Field()
 
 
 class Anime(BasicItem):
@@ -47,8 +45,7 @@ class Anime(BasicItem):
     orig_name = Field()
     pub_date = Field()
 
-    def get_file_urls(self):
-        return [self['cover']]
+    cover_path = Field()
 
 
 class CG(BasicItem):
@@ -82,5 +79,5 @@ class ShortVideo(BasicItem):
     score = Field()
     file_ext = Field()
 
-    def get_file_urls(self):
-        return [self['file_url'], self['preview_url']]
+    file_path = Field()
+    preview_path = Field()

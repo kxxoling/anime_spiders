@@ -42,5 +42,5 @@ export default {
   justify-content space-between
 
   .anime
-    margin-botom 2rem
+    margin-bottom 2rem
 </style>

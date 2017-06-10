@@ -19,7 +19,7 @@ export default {
     localSrc() {
       const localPath = 'donmai_hot';
       const localName = this.cg.large_file_url.split('/').pop();
-      return `/.storage/${localPath}/${localName}`;
+      return `/storage/${localPath}/${localName}`;
     },
   },
 };

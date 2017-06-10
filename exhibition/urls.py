@@ -13,8 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+import os
+
 from django.conf.urls import url, include
+from django.conf.urls.static import static
 from django.contrib import admin
+from django.conf import settings
 from rest_framework import routers
 
 import exhibition.admins  # noqa
@@ -33,3 +37,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
 ]
+
+urlpatterns += static(
+    '^storage/', document_root=os.path.join(settings.BASE_DIR, '.storage')
+    )

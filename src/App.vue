@@ -7,6 +7,7 @@
 
 <script>
 import HeaderNav from '@/components/HeaderNav';
+import 'font-awesome/css/font-awesome.css';
 
 export default {
   name: 'app',

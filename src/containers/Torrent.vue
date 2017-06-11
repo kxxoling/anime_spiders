@@ -42,5 +42,5 @@ export default {
   justify-content space-between
 
   .torrent
-    margin-bottom 2rem
+    margin-bottom 1rem
 </style>

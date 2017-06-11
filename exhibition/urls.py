@@ -39,5 +39,5 @@ urlpatterns = [
 ]
 
 urlpatterns += static(
-    '^storage/', document_root=os.path.join(settings.BASE_DIR, '.storage')
+    'storage/', document_root=os.path.join(settings.BASE_DIR, '.storage')
     )

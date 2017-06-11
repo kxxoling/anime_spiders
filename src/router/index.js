@@ -27,7 +27,7 @@ export default new Router({
     },
     {
       path: '/shortvideo',
-      name: 'Shot Videos',
+      name: 'Short Videos',
       component: ShortVideo,
     },
     {

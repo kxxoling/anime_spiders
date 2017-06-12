@@ -1,6 +1,22 @@
 # coding: utf-8
 from django.db.models import Model as _Model
+from django.db.models import ForeignKey
 from django.db.models import CharField, IntegerField, DateTimeField
+
+from taggit.managers import TaggableManager
+from taggit.models import TagBase, GenericTaggedItemBase
+
+
+class Tag(TagBase):
+    desc = CharField(max_length=300, null=True, default=None)
+
+    class Meta:
+        verbose_name = 'Tag'
+        verbose_name_plural = 'Tags'
+
+
+class Tagged(GenericTaggedItemBase):
+    tag = ForeignKey(Tag, related_name='%(app_label)s_%(class)s_items')
 
 
 class Model(_Model):
@@ -11,6 +27,7 @@ class Model(_Model):
         )
     crawled_from = CharField(max_length=100)
     site_pk = IntegerField()
+    tags = TaggableManager(through=Tagged)
 
     def __unicode__(self):
         return u'<%s: %s from %s>' % (

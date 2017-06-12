@@ -16,6 +16,7 @@ class SakugaSpider(Spider):
     custom_settings = {
         'ITEM_PIPELINES': {
             'anime_spiders.pipelines.ShortVideoDownloadPipeline': 100,
+            'anime_spiders.pipelines.ShortVideoTagsPipeline': 150,
             'anime_spiders.pipelines.DjangoItemPipeline': 200,
         },
     }
@@ -32,7 +33,7 @@ class SakugaSpider(Spider):
                 preview_url=p.xpath('@preview_url').extract_first(),
                 file_url=p.xpath('@file_url').extract_first(),
                 file_size=int(p.xpath('@file_size').extract_first()),
-                tags=p.xpath('@tags').extract_first(),
+                tags_string=p.xpath('@tags').extract_first(),
                 author=p.xpath('@author').extract_first(),
                 source=p.xpath('@source').extract_first(),
                 score=int(p.xpath('@score').extract_first()),

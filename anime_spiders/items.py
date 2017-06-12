@@ -11,7 +11,13 @@ from exhibition import models               # noqa
 
 
 class BasicItem(DjangoItem):
-    pass
+    @property
+    def instance(self):
+        if self._instance is None:
+            self._instance, _ = self.django_model.objects.get_or_create(
+                site_pk=self['site_pk'],
+                crawled_from=self['crawled_from'])
+        return self._instance
 
 
 class Torrent(BasicItem):
@@ -73,7 +79,7 @@ class ShortVideo(BasicItem):
     preview_url = Field()
     file_url = Field()
     file_size = Field()
-    tags = Field()
+    tags_string = Field()
     author = Field()
     source = Field()
     score = Field()

@@ -17,6 +17,20 @@ class DjangoItemPipeline(object):
         return item
 
 
+class CGTagsPipeline(object):
+    def process_item(self, item, spider):
+        tags = item['tags_string'].split(' ')
+        item.tags.add(*tags)
+        return item
+
+
+class ShortVideoTagsPipeline(object):
+    def process_item(self, item, spider):
+        tags = item['tags_string'].split(' ')
+        item.instance.tags.add(*tags)
+        return item
+
+
 class BangumiTVCoverPipeline(object):
     def process_item(self, item, spider):
         cover_url = item['cover']

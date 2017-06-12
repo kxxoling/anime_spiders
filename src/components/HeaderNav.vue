@@ -12,9 +12,19 @@ el-menu(theme="dark", mode="horizontal", router="true")
   el-menu-item(index="/torrent")
     i.fa.fa-download
     | Torrent
+  el-menu-item.float-right(index="admin")
+    a(href="//localhost:8000/admin")
+      i.fa.fa-user
+      | Admin
 </template>
 
 <style lang="stylus" scoped>
 i.fa
   margin-right 0.5rem
+
+.float-right
+  float right
+
+  a
+    text-decoration none
 </style>

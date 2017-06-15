@@ -53,6 +53,25 @@ class Anime(BasicItem):
 
     cover_path = Field()
 
+    alter_names = Field()
+    episodes = Field()
+
+    company = Field()
+    assit_companies = Field()
+
+    directors = Field()
+    scenarists = Field()
+    effect_makers = Field()
+    audio_directors = Field()
+    main_animators = Field()
+    photo_directors = Field()
+    mechanical_designers = Field()
+    anime_directors = Field()
+    charactor_designers = Field()
+    musicians = Field()
+    storyboard_directors = Field()
+    acts = Field()
+
 
 class CG(BasicItem):
     django_model = models.CG

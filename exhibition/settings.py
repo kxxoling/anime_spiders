@@ -143,3 +143,4 @@ HAYSTACK_CONNECTIONS = {
         'INDEX_NAME': 'anime_spiders'
     }
 }
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'

@@ -24,6 +24,30 @@ class CGTagsPipeline(object):
         return item
 
 
+class AnimeTagsPipeline(object):
+    def process_item(self, item, spider):
+        item.instance.assit_companies.add(*item['assit_companies'])
+        tag_fields = [
+            'assit_companies',
+            'directors',
+            'scenarists',
+            'effect_makers',
+            'audio_directors',
+            'main_animators',
+            'photo_directors',
+            'mechanical_designers',
+            'anime_directors',
+            'charactor_designers',
+            'storyboard_directors',
+            'acts',
+            'musicians',
+        ]
+        for field in tag_fields:
+            tag = getattr(item.instance, field)
+            tag.add(*item[field])
+        return item
+
+
 class ShortVideoTagsPipeline(object):
     def process_item(self, item, spider):
         tags = item['tags_string'].split(' ')
@@ -35,14 +59,14 @@ class BangumiTVCoverPipeline(object):
     def process_item(self, item, spider):
         cover_url = item['cover']
         if not cover_url:
-            return
+            return item
         cover_url = 'http:' + item['cover']
         file_full_name = prepare_download(cover_url, spider)
 
         if os.path.exists(file_full_name):
-            return
+            return item
         download_file(cover_url, file_full_name, spider=spider)
-        item['saved_at'] = file_full_name
+        item['cover_path'] = file_full_name
         return item
 
 

@@ -43,8 +43,10 @@ INSTALLED_APPS = [
 INSTALLED_APPS += [
     'rest_framework',
     'taggit',
+    'haystack',
 ]
 
+# Development environment
 INSTALLED_APPS += [
     'django_extensions',
 ]
@@ -132,4 +134,12 @@ STATIC_URL = '/static/'
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 50,
+}
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': os.environ.get('ES_SERVER'),
+        'INDEX_NAME': 'anime_spiders'
+    }
 }

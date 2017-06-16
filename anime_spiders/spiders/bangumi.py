@@ -47,7 +47,7 @@ class BangumiSpider(Spider):
         def extract_episode_node(order_node, node):
             text = node.xpath('span/text()').extract()
             if not text:
-                return dict(name=None, length=None)
+                return dict(name=None, length=None, order=order_node.xpath('a/text()').extract_first())
             return dict(
                 order=order_node.xpath('a/text()').extract_first(),
                 name=text[0].replace(u'中文标题:', '') if u'中文标题' in text[0] else None,

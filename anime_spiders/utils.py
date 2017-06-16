@@ -10,8 +10,9 @@ def download_file(file_url, file_full_name, spider=None):
             for chunk in requests.get(file_url).iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
-    except KeyboardInterrupt:
+    except Exception as e:
         os.remove(file_full_name)
+        raise e
 
 
 def prepare_download(file_url, spider):

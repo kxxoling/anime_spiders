@@ -17,7 +17,7 @@ export default {
       return `//bangumi.tv${this.anime.link}`;
     },
     localSrc() {
-      const localPath = 'donmai_hot';
+      const localPath = 'danbooru_donmai_us';
       const localName = this.cg.large_file_url.split('/').pop();
       return `/storage/${localPath}/${localName}`;
     },
@@ -28,7 +28,10 @@ export default {
 <style lang="stylus" scoped>
 .cg
   height 18rem
-  width 12rem
+  width 15rem
   display flex
-  padding 1rem
+
+  img
+    max-width 100%
+    max-height 100%
 </style>

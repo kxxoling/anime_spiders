@@ -88,6 +88,7 @@ class CG(BasicItem):
     source = Field()
     site_pk = Field()
     tags_string = Field()
+    tags = Field()
     md5 = Field()
     pixiv_id = Field()
 

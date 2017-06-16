@@ -20,7 +20,19 @@ class DjangoItemPipeline(object):
 class CGTagsPipeline(object):
     def process_item(self, item, spider):
         tags = item['tags_string'].split(' ')
-        item.tags.add(*tags)
+        item.instance.tags.add(*tags)
+        return item
+
+
+class DonmaiFileDownloadPipeline(object):
+    def process_item(self, item, spider):
+        file_url = item['large_file_url']
+        file_full_name = prepare_download(file_url, spider)
+        item.instance.cg_path = file_full_name
+
+        if not os.path.exists(file_full_name):
+            download_file('http://danbooru.donmai.us/' + file_url, file_full_name, spider=spider)
+        item.instance.cg_path = file_full_name
         return item
 
 

@@ -15,6 +15,11 @@ class DonmaiHotSpider(Spider):
     ]
     custom_settings = {
         'ROBOTSTXT_OBEY': False,
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.CGTagsPipeline': 100,
+            'anime_spiders.pipelines.DonmaiFileDownloadPipeline': 150,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        }
     }
     base_url = 'http://danbooru.donmai.us/posts.xml'
     tags = 'order:rank'
@@ -24,12 +29,15 @@ class DonmaiHotSpider(Spider):
         if not posts:
             return
         for p in posts:
+            file_url = p.xpath('file-url/text()').extract_first()
+            large_file_url = p.xpath('large-file-url/text()').extract_first() or file_url
+            if not large_file_url:
+                continue
             yield CG(
                 crawled_from='danbooru.donmai.us',
                 site_pk=int(p.xpath('id/text()').extract_first()),
-                large_file_url=p.xpath(
-                    'large-file-url/text()').extract_first(),
-                file_url=p.xpath('file-url/text()').extract_first(),
+                large_file_url=large_file_url,
+                file_url=file_url,
                 source=p.xpath('source/text()').extract_first(),
                 tags_string=p.xpath('tag-string/text()').extract_first(),
                 md5=p.xpath('md5/text()').extract_first(),

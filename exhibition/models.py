@@ -119,6 +119,7 @@ class Anime(Model):
     musicians = tagged_as('musicians', verbose_name=u'音乐')
 
     desc = TextField(null=False, blank=True, default='')
+    episodes = TextField(null=True, default=None)
 
     def __unicode__(self):
         return u'<%s: %s from %s>' % (

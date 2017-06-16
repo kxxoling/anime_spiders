@@ -72,6 +72,7 @@ class Anime(BasicItem):
     storyboard_directors = Field()
     acts = Field()
     desc = Field()
+    episodes = Field()
 
 
 class CG(BasicItem):

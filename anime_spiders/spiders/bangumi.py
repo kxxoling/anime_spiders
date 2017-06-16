@@ -1,6 +1,7 @@
 # coding: utf-8
 from urllib import urlencode
 from urlparse import urlparse, parse_qs
+import json
 
 from scrapy import Spider, Request
 
@@ -40,6 +41,16 @@ class BangumiSpider(Spider):
             episode_length = int(infobox.xpath(u'//span[contains(text(),"话数:")]/ancestor::li/text()').extract_first())
         except:
             episode_length = None
+        episode_nodes = rsp.xpath('//div[@id="subject_prg_content"]/div')
+
+        def extract_episode_node(node):
+            text = node.xpath('span/text()').extract()
+            if not text:
+                return dict(name=None, length=None)
+            return dict(
+                name=text[0].replace(u'中文标题:', '') if u'中文标题' in text[0] else None,
+                length=text[-1].replace(u'时长:', '') if u'时长' in text[-1] else None,
+            )
 
         return Anime(
             crawled_from='bangumi.tv',
@@ -68,6 +79,7 @@ class BangumiSpider(Spider):
             storyboard_directors=infobox.xpath(u'//span[contains(text(),"分镜构图")]/ancestor::li/a/text()').extract(),
             acts=infobox.xpath(u'//span[contains(text(),"演出:")]/ancestor::li/a/text()').extract(),
             desc=''.join(rsp.xpath('//div[@id="subject_summary"]/text()').extract()),
+            episodes=json.dumps([extract_episode_node(node) for node in episode_nodes]),
         )
 
     def get_next_url(self, rsp):

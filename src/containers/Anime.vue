@@ -36,7 +36,8 @@ export default {
 
 <style lang="stylus" scoped>
 .anime-list
-  margin 1rem
+  margin 1rem auto
+  width 1000px
   display flex
   flex-flow row wrap
   justify-content space-between

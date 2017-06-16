@@ -96,7 +96,7 @@ class Anime(Model):
     orig_name = CharField(max_length=100, null=True)
     pub_date = CharField(max_length=100)
 
-    cover_path = CharField(max_length=100, null=True)
+    cover_path = CharField(max_length=100, null=True, default=None)
 
     episode_length = IntegerField(null=True, default=None)
     alter_names = CharField(max_length=100, null=True, default=None)

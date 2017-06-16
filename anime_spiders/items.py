@@ -17,6 +17,10 @@ class BasicItem(DjangoItem):
             self._instance, _ = self.django_model.objects.get_or_create(
                 site_pk=self['site_pk'],
                 crawled_from=self['crawled_from'])
+            modelargs = dict((k, self.get(k)) for k in self._values
+                             if k in self._model_fields and not isinstance(self.get(k), list))
+            for k, v in modelargs.items():
+                setattr(self._instance, k, v)
         return self._instance
 
 

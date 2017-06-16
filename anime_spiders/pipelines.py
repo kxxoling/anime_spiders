@@ -63,9 +63,8 @@ class BangumiTVCoverPipeline(object):
         cover_url = 'http:' + item['cover']
         file_full_name = prepare_download(cover_url, spider)
 
-        if os.path.exists(file_full_name):
-            return item
-        download_file(cover_url, file_full_name, spider=spider)
+        if not os.path.exists(file_full_name):
+            download_file(cover_url, file_full_name, spider=spider)
         item['cover_path'] = file_full_name
         return item
 

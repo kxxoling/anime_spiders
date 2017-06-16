@@ -82,10 +82,11 @@ class CG(Model):
 
     large_file_url = CharField(max_length=100)
     file_url = CharField(max_length=100)
-    source = CharField(max_length=300)
+    source = CharField(max_length=300, null=True, default=None)
     tags_string = CharField(max_length=100)
     md5 = CharField(max_length=100)
-    pixiv_id = IntegerField(null=True)
+    pixiv_id = IntegerField(null=True, default=None)
+    path = CharField(max_length=200, null=True)
 
 
 class Anime(Model):

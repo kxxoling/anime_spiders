@@ -37,14 +37,14 @@ class BangumiSpider(Spider):
     def parse_details(self, rsp):
         infobox = rsp.xpath('//ul[@id="infobox"]')[0]
         try:
-            episodes = int(infobox.xpath(u'//span[contains(text(),"话数:")]/ancestor::li/text()').extract_first())
+            episode_length = int(infobox.xpath(u'//span[contains(text(),"话数:")]/ancestor::li/text()').extract_first())
         except:
-            episodes = None
+            episode_length = None
 
         return Anime(
             crawled_from='bangumi.tv',
             site_pk=int(rsp.url.replace('http://bangumi.tv/subject/', '')),
-            episodes=episodes,
+            episode_length=episode_length,
             link=rsp.url,
             cover=rsp.xpath('//div[@class="infobox"]/div/a/@href').extract_first(),
             name=infobox.xpath(u'//span[contains(text(),"中文名:")]/ancestor::li/text()').extract_first(),
@@ -67,6 +67,7 @@ class BangumiSpider(Spider):
             musicians=infobox.xpath(u'//span[contains(text(),"音乐:")]/ancestor::li/a/text()').extract(),
             storyboard_directors=infobox.xpath(u'//span[contains(text(),"分镜构图")]/ancestor::li/a/text()').extract(),
             acts=infobox.xpath(u'//span[contains(text(),"演出:")]/ancestor::li/a/text()').extract(),
+            desc=''.join(rsp.xpath('//div[@id="subject_summary"]/text()').extract()),
         )
 
     def get_next_url(self, rsp):

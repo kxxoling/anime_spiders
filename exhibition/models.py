@@ -1,7 +1,7 @@
 # coding: utf-8
 from django.db.models import Model as _Model
 from django.db.models import ForeignKey
-from django.db.models import CharField, IntegerField, DateTimeField
+from django.db.models import CharField, IntegerField, DateTimeField, TextField
 
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
@@ -98,7 +98,7 @@ class Anime(Model):
 
     cover_path = CharField(max_length=100, null=True)
 
-    episodes = IntegerField(null=True, default=None)
+    episode_length = IntegerField(null=True, default=None)
     alter_names = CharField(max_length=100, null=True, default=None)
 
     company = ForeignKey(Tag, related_name='companies', null=True, default=None)
@@ -117,6 +117,8 @@ class Anime(Model):
     acts = tagged_as('acts', verbose_name=u'演出')
 
     musicians = tagged_as('musicians', verbose_name=u'音乐')
+
+    desc = TextField(null=False, blank=True, default='')
 
     def __unicode__(self):
         return u'<%s: %s from %s>' % (

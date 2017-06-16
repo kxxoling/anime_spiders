@@ -54,7 +54,7 @@ class Anime(BasicItem):
     cover_path = Field()
 
     alter_names = Field()
-    episodes = Field()
+    episode_length = Field()
 
     company = Field()
     assit_companies = Field()
@@ -71,6 +71,7 @@ class Anime(BasicItem):
     musicians = Field()
     storyboard_directors = Field()
     acts = Field()
+    desc = Field()
 
 
 class CG(BasicItem):

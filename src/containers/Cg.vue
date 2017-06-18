@@ -69,6 +69,9 @@ export default {
   components: {
     Cg,
   },
+  metaInfo: {
+    title: 'Gallery',
+  },
 };
 </script>
 

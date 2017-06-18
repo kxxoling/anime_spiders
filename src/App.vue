@@ -14,6 +14,13 @@ export default {
   components: {
     HeaderNav,
   },
+  metaInfo: {
+    title: 'Home',
+    titleTemplate: '%s - Spider the anime world',
+    htmlAttrs: {
+      lang: 'zh-CN',
+    },
+  },
 };
 </script>
 

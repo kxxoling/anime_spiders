@@ -31,6 +31,9 @@ export default {
   components: {
     Torrent,
   },
+  metaInfo: {
+    title: 'Torrents',
+  },
 };
 </script>
 

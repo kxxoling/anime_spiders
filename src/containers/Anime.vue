@@ -31,6 +31,9 @@ export default {
   components: {
     Anime,
   },
+  metaInfo: {
+    title: 'Animes',
+  },
 };
 </script>
 

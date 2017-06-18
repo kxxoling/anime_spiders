@@ -31,6 +31,9 @@ export default {
   components: {
     ShortVideo,
   },
+  metaInfo: {
+    title: 'Short Videos',
+  },
 };
 </script>
 

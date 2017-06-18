@@ -83,10 +83,19 @@ class CG(Model):
     large_file_url = CharField(max_length=100)
     file_url = CharField(max_length=100)
     source = CharField(max_length=300, null=True, default=None)
-    tags_string = CharField(max_length=100)
     md5 = CharField(max_length=100)
     pixiv_id = IntegerField(null=True, default=None)
     path = CharField(max_length=200, null=True)
+
+    donmai_uploader_id = IntegerField(null=True)
+    rating = CharField(max_length=5, null=True)   # s e q
+    fav_count = IntegerField(null=False, default=0)
+    score = IntegerField(null=False, default=0)
+
+    artist_tags = tagged_as('artists', verbose_name='artists')
+    character_tags = tagged_as('charactors', verbose_name='charactors')
+    general_tags = tagged_as('general', verbose_name=u'一般标签')
+    copyright_tags = tagged_as('copyright', verbose_name=u'作品版权')
 
 
 class Anime(Model):

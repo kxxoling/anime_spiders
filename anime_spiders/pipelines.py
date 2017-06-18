@@ -19,8 +19,14 @@ class DjangoItemPipeline(object):
 
 class CGTagsPipeline(object):
     def process_item(self, item, spider):
-        tags = item['tags_string'].split(' ')
-        item.instance.tags.add(*tags)
+        general_tags = item['general_tags'].split(' ')
+        artist_tags = item['general_tags'].split(' ')
+        character_tags = item['character_tags'].split(' ')
+        copyright_tags = item['general_tags'].split(' ')
+        item.instance.general_tags.add(*general_tags)
+        item.instance.artist_tags.add(*artist_tags)
+        item.instance.character_tags.add(*character_tags)
+        item.instance.copyright_tags.add(*copyright_tags)
         return item
 
 

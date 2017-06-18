@@ -8,6 +8,31 @@ from scrapy import Spider, Request
 from anime_spiders.items import CG
 
 
+def extract_donmai_rss(p):
+    file_url = p.xpath('file-url/text()').extract_first()
+    large_file_url = p.xpath('large-file-url/text()').extract_first() or file_url
+    if not large_file_url:
+        return {}
+
+    return dict(
+        crawled_from='danbooru.donmai.us',
+        site_pk=int(p.xpath('id/text()').extract_first()),
+        large_file_url=large_file_url,
+        file_url=file_url,
+        source=p.xpath('source/text()').extract_first(),
+        md5=p.xpath('md5/text()').extract_first(),
+        pixiv_id=p.xpath('pixiv-id/text()').extract_first(),
+        donmai_uploader_id=p.xpath('uploader-id/text()').extract_first(),
+        rating=p.xpath('rating/text()').extract_first(),
+        fav_count=p.xpath('fav-count/text()').extract_first(),
+        score=p.xpath('up-score/text()').extract_first(),
+        artist_tags=p.xpath('tag-string-artist/text()').extract_first() or '',
+        character_tags=p.xpath('tag-string-character/text()').extract_first() or '',
+        general_tags=p.xpath('tag-string-general/text()').extract_first() or '',
+        copyright_tags=p.xpath('tag-string-copyright/text()').extract_first() or '',
+    )
+
+
 class DonmaiHotSpider(Spider):
     name = 'donmai_hot'
     start_urls = [
@@ -29,20 +54,10 @@ class DonmaiHotSpider(Spider):
         if not posts:
             return
         for p in posts:
-            file_url = p.xpath('file-url/text()').extract_first()
-            large_file_url = p.xpath('large-file-url/text()').extract_first() or file_url
-            if not large_file_url:
+            cg = extract_donmai_rss(p)
+            if not cg:
                 continue
-            yield CG(
-                crawled_from='danbooru.donmai.us',
-                site_pk=int(p.xpath('id/text()').extract_first()),
-                large_file_url=large_file_url,
-                file_url=file_url,
-                source=p.xpath('source/text()').extract_first(),
-                tags_string=p.xpath('tag-string/text()').extract_first(),
-                md5=p.xpath('md5/text()').extract_first(),
-                pixiv_id=p.xpath('pixiv-id/text()').extract_first(),
-            )
+            yield CG(**cg)
 
         next_url = self.get_next_url(rsp)
         yield Request(next_url, callback=self.parse)
@@ -79,20 +94,10 @@ class DonmaiMonthlyPopilarSpider(Spider):
 
     def parse(self, rsp):
         for p in rsp.xpath('//posts/post'):
-            file_url = p.xpath('file-url/text()').extract_first()
-            large_file_url = p.xpath('large-file-url/text()').extract_first() or file_url
-            if not large_file_url:
+            cg = extract_donmai_rss(p)
+            if not cg:
                 continue
-            yield CG(
-                crawled_from='danbooru.donmai.us',
-                site_pk=int(p.xpath('id/text()').extract_first()),
-                large_file_url=large_file_url,
-                file_url=file_url,
-                source=p.xpath('source/text()').extract_first(),
-                tags_string=p.xpath('tag-string/text()').extract_first(),
-                md5=p.xpath('md5/text()').extract_first(),
-                pixiv_id=p.xpath('pixiv-id/text()').extract_first(),
-            )
+            yield CG(**cg)
 
         next_url = self.get_next_url(rsp)
         yield Request(next_url, callback=self.parse)

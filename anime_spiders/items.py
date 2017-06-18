@@ -87,11 +87,20 @@ class CG(BasicItem):
     file_url = Field()
     source = Field()
     site_pk = Field()
-    tags_string = Field()
-    tags = Field()
+
     md5 = Field()
     pixiv_id = Field()
     path = Field()
+
+    donmai_uploader_id = Field()
+    rating = Field()
+    fav_count = Field()
+    score = Field()
+
+    artist_tags = Field()
+    character_tags = Field()
+    general_tags = Field()
+    copyright_tags = Field()
 
     def get_file_urls(self):
         return [self['large_file_url'], self['file_url']]

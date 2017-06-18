@@ -2,6 +2,7 @@
 .short-video(@click="play=!play")
   figure.preview
     img(v-bind:src="preview")
+    .play-button.fa.fa-play-circle(v-if="!play && video.file_ext==='mp4'")
 
   video.short-view-play(
     v-if="video.file_ext==='mp4' && play",
@@ -52,6 +53,15 @@ export default {
     img
       width 100%
       height auto
+
+    .play-button
+      color white
+      position absolute
+      background-color rgba(0, 0, 0, 0.3)
+      width 4rem
+      font-size 4rem
+      text-align center
+      border-radius 2rem
 
   .short-view-play
     width 100%

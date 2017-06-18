@@ -91,6 +91,7 @@ class CG(BasicItem):
     tags = Field()
     md5 = Field()
     pixiv_id = Field()
+    path = Field()
 
     def get_file_urls(self):
         return [self['large_file_url'], self['file_url']]

@@ -28,11 +28,11 @@ class DonmaiFileDownloadPipeline(object):
     def process_item(self, item, spider):
         file_url = item['large_file_url']
         file_full_name = prepare_download(file_url, spider)
-        item.instance.cg_path = file_full_name
 
         if not os.path.exists(file_full_name):
             download_file('http://danbooru.donmai.us/' + file_url, file_full_name, spider=spider)
-        item.instance.cg_path = file_full_name
+
+        item.instance.path = file_full_name.lstrip('.storage/')
         return item
 
 
@@ -77,7 +77,7 @@ class BangumiTVCoverPipeline(object):
 
         if not os.path.exists(file_full_name):
             download_file(cover_url, file_full_name, spider=spider)
-        item['cover_path'] = file_full_name
+        item['cover_path'] = file_full_name.lstrip('.storage/')
         return item
 
 
@@ -91,7 +91,7 @@ class TorrentDownloadPipeline(object):
         if os.path.exists(file_full_name):
             return item
         download_file(torrent_url, file_full_name, spider=spider)
-        item['torrent_path'] = file_full_name
+        item['torrent_path'] = file_full_name.lstrip('.storage/')
         return item
 
 
@@ -101,11 +101,11 @@ class ShortVideoDownloadPipeline(object):
             file_full_name = prepare_download(item['file_url'], spider)
             if not os.path.exists(file_full_name):
                 download_file(item['file_url'], file_full_name, spider=spider)
-            item['file_path'] = file_full_name
+            item['file_path'] = file_full_name.lstrip('.storage/')
 
         if item['preview_url']:
             file_full_name = prepare_download(item['preview_url'], spider)
             if not os.path.exists(file_full_name):
                 download_file(item['preview_url'], file_full_name, spider=spider)
-            item['preview_path'] = file_full_name
+            item['preview_path'] = file_full_name.lstrip('.storage/')
         return item

@@ -128,3 +128,18 @@ class ShortVideoDownloadPipeline(object):
                 download_file(item['preview_url'], file_full_name, spider=spider)
             item['preview_path'] = file_full_name.lstrip('.storage/')
         return item
+
+
+class EHImageDownloadPipeline(object):
+    def process_item(self, item, spider):
+        image_url = item['url']
+        file_name = image_url.rsplit('/', 1)[-1]
+        file_dir = os.path.join('.storage', item['dir'])
+        file_full_name = os.path.join(file_dir, file_name)
+        if os.path.exists(file_full_name):
+            return item
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
+
+        download_file(image_url, file_full_name, spider=spider)
+        return item

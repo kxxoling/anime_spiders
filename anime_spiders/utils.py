@@ -15,14 +15,18 @@ def download_file(file_url, file_full_name, spider=None):
         raise e
 
 
-def prepare_download(file_url, spider):
+def prepare_download(file_url, spider=None, file_dir=None):
     if not file_url:
         return
     file_url = spider.get_full_url(file_url)
     url_domain = file_url.lstrip('http://').lstrip('https://')\
                 .lstrip('//').split('/')[0]
     file_name = file_url.rsplit('/', 1)[-1]
-    file_dir = os.path.join('.storage', url_domain.replace('.', '_'))
+
+    if not file_dir:
+        file_dir = os.path.join('.storage', url_domain.replace('.', '_'))
+    else:
+        file_dir = os.path.join('.storage', file_dir)
 
     if not os.path.exists(file_dir):
         os.makedirs(file_dir)

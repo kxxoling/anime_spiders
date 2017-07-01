@@ -42,6 +42,19 @@ class DonmaiFileDownloadPipeline(object):
         return item
 
 
+class DaviantArtFileDownloadPipeline(object):
+    def process_item(self, item, spider):
+        file_url = item['large_file_url']
+        domain = item['source'].split('/')[2]
+        file_full_name = prepare_download(file_url, spider, file_dir=domain.replace('.', '_'))
+        print file_full_name
+        if not os.path.exists(file_full_name):
+            download_file(file_url, file_full_name, spider=spider)
+
+        item.instance.path = file_full_name.lstrip('.storage/')
+        return item
+
+
 class AnimeTagsPipeline(object):
     def process_item(self, item, spider):
         item.instance.assit_companies.add(*item['assit_companies'])

@@ -29,25 +29,31 @@ figure
   padding 0
 
 .view-container
-  display flex
-  justify-content space-between
-  flex-flow row wrap
-  margin 1rem auto
-  box-sizing border-box
-  padding 0 1rem
+  .pagination
+    text-align center
+    margin-bottom 2rem
+  .list-container
+    display flex
+    justify-content space-between
+    flex-flow row wrap
+    margin 1rem auto 0
+    box-sizing border-box
+    padding 0 1rem
 
 @media(min-width: 1024px)
   .view-container
-    width 1000px
+    .list-container
+      width 1000px
 
 @media(min-width: 1400px)
   .view-container
-    width 1360px
+    .list-container
+      width 1360px
 
 @media(min-width: 1800px)
   .view-container
-    width 100%
-    padding 0 2rem
+    .list-container
+      width 100%
 
 // hack el-dialog styles
 .el-dialog__wrapper

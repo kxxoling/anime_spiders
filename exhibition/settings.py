@@ -132,7 +132,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'exhibition.pagination.PagesCountPagination',
     'PAGE_SIZE': 50,
 }
 

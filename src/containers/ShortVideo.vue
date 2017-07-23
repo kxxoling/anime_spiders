@@ -1,11 +1,19 @@
 <template lang="jade">
 .video-list
-  short-video.video(v-for="video in shortVideos", :video="video", key="video.id")
+  .list-container
+    short-video.video(v-for="video in shortVideos", :video="video", key="video.id")
+  el-pagination.pagination(
+    layout="prev, pager, next",
+    :total="100",
+    @current-change="fetchPage"
+  )
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ShortVideo from '@/components/ShortVideo';
+
+const PAGE_SIZE = 30;
 
 export default {
   data() {
@@ -14,7 +22,7 @@ export default {
   },
   mounted() {
     if (!this.shortVideos.length) {
-      this.getVideos({ page: 1, size: 10 });
+      this.getVideos({ page: 1, size: PAGE_SIZE });
     }
   },
   computed: {
@@ -27,6 +35,9 @@ export default {
     ...mapActions({
       getVideos: 'getVideos',
     }),
+    fetchPage(val) {
+      this.getVideos({ page: val, size: PAGE_SIZE });
+    },
   },
   components: {
     ShortVideo,

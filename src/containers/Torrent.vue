@@ -1,11 +1,19 @@
 <template lang="jade">
 .torrent-list
-  torrent.torrent(v-for="torrent in torrents", :torrent="torrent", key="torrent.id")
+  .list-container
+    torrent.torrent(v-for="torrent in torrents", :torrent="torrent", key="torrent.id")
+  el-pagination.pagination(
+    layout="prev, pager, next",
+    :total="100",
+    @current-change="fetchPage"
+  )
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import Torrent from '@/components/Torrent';
+
+const PAGE_SIZE = 30;
 
 export default {
   data() {
@@ -27,6 +35,9 @@ export default {
     ...mapActions({
       getTorrents: 'getTorrents',
     }),
+    fetchPage(val) {
+      this.getTorrents({ page: val, size: PAGE_SIZE });
+    },
   },
   components: {
     Torrent,

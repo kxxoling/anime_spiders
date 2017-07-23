@@ -22,6 +22,9 @@ el-menu(theme="dark", mode="horizontal", router="true")
 i.fa
   margin-right 0.5rem
 
+.el-menu-item
+  padding 0 2rem
+
 .float-right
   float right
 

@@ -1,8 +1,7 @@
-<template>
-  <div id="app">
-    <header-nav/>
-    <router-view></router-view>
-  </div>
+<template lang="jade">
+#app
+  header-nav
+  router-view.view-container
 </template>
 
 <script>
@@ -28,6 +27,27 @@ export default {
 figure
   margin 0
   padding 0
+
+.view-container
+  display flex
+  justify-content space-between
+  flex-flow row wrap
+  margin 1rem auto
+  box-sizing border-box
+  padding 0 1rem
+
+@media(min-width: 1024px)
+  .view-container
+    width 1000px
+
+@media(min-width: 1400px)
+  .view-container
+    width 1360px
+
+@media(min-width: 1800px)
+  .view-container
+    width 100%
+    padding 0 2rem
 
 // hack el-dialog styles
 .el-dialog__wrapper

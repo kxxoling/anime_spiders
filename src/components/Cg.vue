@@ -34,4 +34,7 @@ export default {
   img
     max-width 100%
     max-height 100%
+
+    &:hover
+      box-shadow 0 0 2rem #aaa
 </style>

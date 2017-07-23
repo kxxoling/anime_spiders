@@ -37,8 +37,11 @@ a
   width 20rem
   display flex
   border-radius 4px
-  box-shadow 0 0 1rem rgba(0, 0, 0, .2)
   overflow hidden
+  border 1px solid rgba(0, 0, 0, .2)
+  
+  &:hover  
+    box-shadow 0 0 1rem rgba(0, 0, 0, .2)
 
   .cover
     display flex

@@ -77,17 +77,13 @@ export default {
 
 <style lang="stylus" scoped>
 .cg-list
-  margin 1rem auto
-  display flex
-  flex-flow row wrap
-  justify-content space-between
-  width 1000px
   *
     word-break break-all
 
   .cg
     margin-bottom 2rem
     cursor pointer
+
 .detailed
   font-size 1.2rem
   line-height 2rem

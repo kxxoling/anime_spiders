@@ -39,11 +39,6 @@ export default {
 
 <style lang="stylus" scoped>
 .video-list
-  margin 1rem
-  display flex
-  flex-flow row wrap
-  justify-content space-between
-
   .video
     margin-bottom 1rem
 </style>

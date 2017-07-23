@@ -33,9 +33,13 @@ export default {
 <style lang="stylus" scoped>
 .torrent
   height 12rem
-  width 20rem
+  width 18rem
   padding 1rem
-  background green
+  border 1px solid #ccc
+
+  &:hover
+    border-color #22aa22
+    box-shadow 0 0 10px #ccc
 
   h2
     font-size 1.1rem

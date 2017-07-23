@@ -39,11 +39,6 @@ export default {
 
 <style lang="stylus" scoped>
 .torrent-list
-  margin 1rem
-  display flex
-  flex-flow row wrap
-  justify-content space-between
-
   .torrent
     margin-bottom 1rem
 </style>

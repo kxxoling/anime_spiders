@@ -7,7 +7,7 @@ const state = {
 };
 
 const getters = {
-  isFetching: state_ => state_.isFetching,
+  isFetchingTorrents: state_ => state_.isFetching,
   torrents: state_ => state_.data,
   torrentPagesCount: state_ => state_.pagesCount,
 };

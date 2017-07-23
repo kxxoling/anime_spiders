@@ -28,7 +28,7 @@ export default {
   computed: {
     ...mapGetters({
       shortVideos: 'shortVideos',
-      isFetching: 'isFetching',
+      isFetching: 'isFetchingVideos',
       pagesCount: 'videoPagesCount',
     }),
   },

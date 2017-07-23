@@ -22,13 +22,13 @@ export default {
   },
   mounted() {
     if (!this.torrents.length) {
-      this.getTorrents({ page: 1, size: 10 });
+      this.getTorrents({ page: 1, size: PAGE_SIZE });
     }
   },
   computed: {
     ...mapGetters({
       torrents: 'torrents',
-      isFetching: 'isFetching',
+      isFetching: 'isFetchingTorrents',
       pagesCount: 'videoPagesCount',
     }),
   },

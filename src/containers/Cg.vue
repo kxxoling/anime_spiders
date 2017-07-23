@@ -62,7 +62,7 @@ export default {
   computed: {
     ...mapGetters({
       cgs: 'cgs',
-      isFetching: 'isFetching',
+      isFetching: 'isFetchingCgs',
       pagesCount: 'cgPagesCount',
     }),
   },

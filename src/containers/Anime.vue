@@ -28,7 +28,7 @@ export default {
   computed: {
     ...mapGetters({
       animes: 'animes',
-      isFetching: 'isFetching',
+      isFetching: 'isFetchingAnimes',
       pagesCount: 'animePagesCount',
     }),
   },

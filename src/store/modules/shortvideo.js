@@ -3,11 +3,13 @@ import axios from 'axios';
 const state = {
   isFetching: false,
   data: [],
+  pagesCount: null,
 };
 
 const getters = {
   isFetching: state_ => state_.isFetching,
   shortVideos: state_ => state_.data,
+  videoPagesCount: state_ => state_.pagesCount,
 };
 
 const actions = {
@@ -17,6 +19,7 @@ const actions = {
     .then((rsp) => {
       const videoList = rsp.data.results;
       commit('listVideos', videoList);
+      commit('setPagesCount', rsp.data.pagesCount);
     });
   },
 };
@@ -25,6 +28,9 @@ const actions = {
 const mutations = {
   listVideos(state_, videoList) {
     state_.data = videoList;
+  },
+  setPagesCount(state_, pagesCount) {
+    state_.pagesCount = pagesCount;
   },
 };
 /* eslint-enable no-param-reassign */

@@ -36,7 +36,7 @@
             a(v-bind:href="'//www.pixiv.net/member_illust.php?mode=medium&illust_id=' + checked.pixiv_id") {{ checked.pixiv_id }}
   el-pagination.pagination(
     layout="prev, pager, next",
-    :total="100",
+    :page-count="pagesCount",
     @current-change="fetchPage"
   )
 </template>
@@ -63,6 +63,7 @@ export default {
     ...mapGetters({
       cgs: 'cgs',
       isFetching: 'isFetching',
+      pagesCount: 'cgPagesCount',
     }),
   },
   methods: {

@@ -4,7 +4,7 @@
     short-video.video(v-for="video in shortVideos", :video="video", key="video.id")
   el-pagination.pagination(
     layout="prev, pager, next",
-    :total="100",
+    :page-count="pagesCount",
     @current-change="fetchPage"
   )
 </template>
@@ -29,6 +29,7 @@ export default {
     ...mapGetters({
       shortVideos: 'shortVideos',
       isFetching: 'isFetching',
+      pagesCount: 'videoPagesCount',
     }),
   },
   methods: {

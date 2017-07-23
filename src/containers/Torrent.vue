@@ -4,7 +4,7 @@
     torrent.torrent(v-for="torrent in torrents", :torrent="torrent", key="torrent.id")
   el-pagination.pagination(
     layout="prev, pager, next",
-    :total="100",
+    :page-count="pagesCount",
     @current-change="fetchPage"
   )
 </template>
@@ -29,6 +29,7 @@ export default {
     ...mapGetters({
       torrents: 'torrents',
       isFetching: 'isFetching',
+      pagesCount: 'videoPagesCount',
     }),
   },
   methods: {

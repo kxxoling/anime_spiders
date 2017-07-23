@@ -4,7 +4,7 @@
     anime.anime(v-for="anime in animes", :anime="anime", key="anime.id")
   el-pagination.pagination(
     layout="prev, pager, next",
-    :total="100",
+    :page-count="pagesCount",
     @current-change="fetchPage"
   )
 </template>
@@ -29,6 +29,7 @@ export default {
     ...mapGetters({
       animes: 'animes',
       isFetching: 'isFetching',
+      pagesCount: 'animePagesCount',
     }),
   },
   methods: {

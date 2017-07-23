@@ -3,11 +3,13 @@ import axios from 'axios';
 const state = {
   isFetching: false,
   data: [],
+  pagesCount: null,
 };
 
 const getters = {
   isFetching: state_ => state_.isFetching,
   torrents: state_ => state_.data,
+  torrentPagesCount: state_ => state_.pagesCount,
 };
 
 const actions = {
@@ -17,6 +19,7 @@ const actions = {
     .then((rsp) => {
       const torrentList = rsp.data.results;
       commit('listTorrents', torrentList);
+      commit('setPagesCount', rsp.data.pagesCount);
     });
   },
 };
@@ -25,6 +28,9 @@ const actions = {
 const mutations = {
   listTorrents(state_, torrentList) {
     state_.data = torrentList;
+  },
+  setPagesCount(state_, pagesCount) {
+    state_.pagesCount = pagesCount;
   },
 };
 /* eslint-enable no-param-reassign */

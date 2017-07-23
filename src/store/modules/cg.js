@@ -3,11 +3,13 @@ import axios from 'axios';
 const state = {
   isFetching: false,
   data: [],
+  pagesCount: null,
 };
 
 const getters = {
   isFetching: state_ => state_.isFetching,
   cgs: state_ => state_.data,
+  cgPagesCount: state_ => state_.pagesCount,
 };
 
 const actions = {
@@ -17,6 +19,7 @@ const actions = {
     .then((rsp) => {
       const cgList = rsp.data.results;
       commit('listCgs', cgList);
+      commit('setPagesCount', rsp.data.pagesCount);
     });
   },
 };
@@ -25,6 +28,9 @@ const actions = {
 const mutations = {
   listCgs(state_, cgList) {
     state_.data = cgList;
+  },
+  setPagesCount(state_, pagesCount) {
+    state_.pagesCount = pagesCount;
   },
 };
 /* eslint-enable no-param-reassign */

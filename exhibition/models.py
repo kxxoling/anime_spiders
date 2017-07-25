@@ -49,6 +49,8 @@ class Model(_Model):
         unique_together = (
             ('crawled_from', 'site_pk'),
         )
+        ordering = ('-id',)
+
     crawled_from = CharField(max_length=100)
     site_pk = IntegerField()
     tags = TaggableManager(through=Tagged, verbose_name='tags')

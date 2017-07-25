@@ -27,7 +27,7 @@ class TorrentIndex(SearchIndex, Indexable):
     text = CharField(document=True)
     title = CharField(model_attr='title')
     team_name = CharField(model_attr='team_name', null=True)
-    pub_date = DateTimeField(model_attr='pub_date')
+    pub_date = DateTimeField(model_attr='pub_date', null=True)
     author = CharField(model_attr='author', null=True)
     category = CharField(model_attr='category', null=True)
 

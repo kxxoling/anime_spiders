@@ -18,9 +18,10 @@ def download_file(file_url, file_full_name, spider=None):
 def prepare_download(file_url, spider=None, file_dir=None):
     if not file_url:
         return
-    file_url = spider.get_full_url(file_url)
+    if not file_url.startswith('http'):
+        file_url = spider.get_full_url(file_url)
     url_domain = file_url.lstrip('http://').lstrip('https://')\
-                .lstrip('//').split('/')[0]
+                         .lstrip('//').split('/')[0]
     file_name = file_url.rsplit('/', 1)[-1]
 
     if not file_dir:

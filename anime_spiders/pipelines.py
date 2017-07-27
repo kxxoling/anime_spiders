@@ -106,6 +106,7 @@ class TorrentDownloadPipeline(object):
             return item
 
         torrent_url = spider.get_full_url(item['torrent'])
+        # torrent_url = item['torrent']
         file_full_name = prepare_download(torrent_url, spider)
         if os.path.exists(file_full_name):
             return item

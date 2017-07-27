@@ -14,6 +14,7 @@ class BasicItem(DjangoItem):
     @property
     def instance(self):
         if self._instance is None:
+            print self
             self._instance, _ = self.django_model.objects.get_or_create(
                 site_pk=self['site_pk'],
                 crawled_from=self['crawled_from'])

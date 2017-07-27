@@ -25,17 +25,17 @@ class NyaaRSSSpider(XMLFeedSpider):
         item = Torrent()
         item['crawled_from'] = 'nyaa.si'
         item['site'] = 'nyaa_si'
-        item['site_pk'] = int(node.xpath('guid/text()')
-                              .extract_first().rsplit('/', 1)[-1])
         item['title'] = node.xpath('title/text()').extract_first()
         item['torrent'] = node.xpath('link/text()').extract_first().replace('https://nyaa.si', '')
         item['link'] = item['torrent'].replace('/torrent', ''),
+        item['site_pk'] = int(node.xpath('guid/text()')
+                              .extract_first().rsplit('/', 1)[-1])
         item['pub_date'] = dateutil.parser.parse(
             node.xpath('pubDate/text()').extract_first())
         return item
 
     def get_full_url(self, url):
-        return 'https://nyaa.si/%s' % url
+        return 'https://nyaa.si%s' % url
 
 
 class NyaaSpider(Spider):
@@ -57,12 +57,14 @@ class NyaaSpider(Spider):
             "//div[@class='table-responsive']/table/tbody/tr")
         for i in torrent_nodes:
             item = Torrent()
+            item['crawled_from'] = 'nyaa.si'
+            item['site'] = 'nyaa_si'
             item['category'] = i.xpath('td')[0].xpath('a/@href').extract_first().replace('/?c=', '')
 
             item['title'] = i.xpath('td')[1].xpath('a/text()').extract_first()
 
             item['link'] = i.xpath('td')[1].xpath('a/@href').extract_first()
-            item['site_pk'] = int(item['link'].replace('/view/', ''))
+            item['site_pk'] = int(item['link'].replace('/view/', '').replace('#comments', ''))
 
             links = i.xpath('td')[2].xpath('a/@href')
             for link in links:

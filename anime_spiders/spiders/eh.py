@@ -7,7 +7,6 @@ class EHGallerySpider(Spider):
     name = 'eh_gallery'
     allowed_domains = ['e-hentai.org']
     start_urls = [
-        'https://e-hentai.org/g/608036/a3b4c123dd/',
     ]
 
     custom_settings = {
@@ -16,27 +15,26 @@ class EHGallerySpider(Spider):
             'anime_spiders.pipelines.EHImageDownloadPipeline': 100,
         }
     }
-    dir_name = None
 
     def parse(self, rsp):
-        self.dir_name = rsp.xpath('//h1[@id="gj"]/text()').extract_first() or \
+        dir_name = rsp.xpath('//h1[@id="gj"]/text()').extract_first() or \
             rsp.xpath('//h1[@id="gn"]/text()').extract_first()
-        for item in self.parse_page(rsp):
-            yield item
+        for request in self.parse_page(rsp, dir_name):
+            yield request
         pages_set = set(rsp.xpath('//table[@class="ptb"]//td/a/@href').extract())
         pages_set.remove(rsp.url)
         pages = list(pages_set)
         for page in pages:
-            yield Request(page, callback=self.parse_page)
+            yield Request(page, callback=self.parse_page, meta={'dir': dir_name})
 
-    def parse_page(self, rsp):
+    def parse_page(self, rsp, dir_name=None):
         image_pages = rsp.xpath('//div[@class="gdtm"]//a/@href').extract()
         for image_page in image_pages:
-            yield Request(image_page, callback=self.parse_image_page)
+            yield Request(image_page, callback=self.parse_image_page, meta={'dir': dir_name or rsp.meta['dir']})
 
     def parse_image_page(self, rsp):
         return {
-            'dir': self.dir_name,
+            'dir': rsp.meta['dir'],
             'url': rsp.xpath('//img[@id="img"]/@src').extract_first(),
         }
 

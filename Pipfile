@@ -5,6 +5,7 @@ verify_ssl = true
 [dev-packages]
 ipython = "*"
 django-extensions = "*"
+coverage = ">4,<5"
 Markdown = "*"
 Werkzeug = "*"
 
@@ -17,5 +18,7 @@ django-filter = "*"
 django-taggit = "*"
 django-haystack = "*"
 elasticsearch = ">2,<3"
+pytest = ">2.8,<3"
+pytest-django = ">3,<4"
 Scrapy = "*"
 Django = "*"

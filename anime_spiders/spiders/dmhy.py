@@ -20,6 +20,13 @@ class DmhyRssSpider(Spider):
     }
 
     def parse(self, rsp):
+        """ Parse torrent item from feed
+
+        @url https://bangumi.moe/rss/latest
+        @returns items 10 100
+        @scraps crawled_from site_pk title torrent link
+            pub_date category
+        """
         items = rsp.xpath('//rss/channel/item')
         if not items:
             return

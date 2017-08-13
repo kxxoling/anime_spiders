@@ -23,6 +23,11 @@ class BangumiSpider(Spider):
     }
 
     def parse(self, rsp):
+        """ Parse anime items from page
+
+        @url http://bangumi.tv/anime/browser/?sort=date&page=1
+        @returns requests 1
+        """
         subjects = rsp.xpath('//ul[@id="browserItemList"]/li')
         if not subjects:
             return
@@ -36,6 +41,17 @@ class BangumiSpider(Spider):
         yield Request(next_url, callback=self.parse)
 
     def parse_details(self, rsp):
+        """ Parse anime items from page
+
+        @url http://bangumi.tv/subject/18632
+        @returns items 1
+        @scraps crawled_from site_pk episode_length link cover name desc
+            episodes pub_date orig_name alter_names
+            directors scenarists company assit_companies effect_makers
+            audio_directors main_animators photo_directors mechanical_designers
+            anime_directors charactor_designers musicians storyboard_directors
+            acts
+        """
         infobox = rsp.xpath('//ul[@id="infobox"]')[0]
         try:
             episode_length = int(infobox.xpath(u'//span[contains(text(),"话数:")]/ancestor::li/text()').extract_first())

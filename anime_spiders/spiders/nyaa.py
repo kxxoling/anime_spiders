@@ -22,6 +22,13 @@ class NyaaRSSSpider(XMLFeedSpider):
     }
 
     def parse_node(self, rsp, node):
+        """ Parse torrent item from feed
+
+        @url https://nyaa.si/?page=rss
+        @returns items 10 100
+        @scraps crawled_from site_pk site title torrent link
+            pub_date
+        """
         item = Torrent()
         item['crawled_from'] = 'nyaa.si'
         item['site'] = 'nyaa_si'
@@ -53,6 +60,13 @@ class NyaaSpider(Spider):
     }
 
     def parse(self, rsp):
+        """ Parse torrent items from page
+
+        @url https://acg.rip/page/1
+        @returns items 1 30
+        @scraps topic_id title size magnet link pub_date
+            torrent magnet crawled_from site site_pk
+        """
         torrent_nodes = rsp.xpath(
             "//div[@class='table-responsive']/table/tbody/tr")
         for i in torrent_nodes:

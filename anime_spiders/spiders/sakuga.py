@@ -22,6 +22,12 @@ class SakugaSpider(Spider):
     }
 
     def parse(self, rsp):
+        """ Parse video items from xml
+        @url https://sakugabooru.com/post.xml
+        @returns items 1 100
+        @scraps crawled_from site_pk md5 preview_url file_url file_size
+            tags_string author source score file_ext
+        """
         posts = rsp.xpath('//posts/post')
         if not posts:
             return

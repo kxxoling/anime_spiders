@@ -18,6 +18,13 @@ class AcgRipSpider(Spider):
     }
 
     def parse(self, rsp):
+        """ Parse torrent items from page
+
+        @url https://acg.rip/page/1
+        @returns items 1 30
+        @scraps team_title team_name team_link team_id topic_id title size
+            torrent crawled_from
+        """
         items = rsp.xpath('//table/tr')
         if not items:
             return

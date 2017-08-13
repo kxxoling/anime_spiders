@@ -22,6 +22,13 @@ class BangumiMoeFeedSpider(XMLFeedSpider):
     }
 
     def parse_node(self, rsp, node):
+        """ Parse torrent item from feed
+
+        @url https://bangumi.moe/rss/latest
+        @returns items 50 100
+        @scraps crawled_from site site_pk title team_name torrent link
+            pub_date category
+        """
         item = Torrent()
         item['crawled_from'] = 'bangumi.moe'
         item['site'] = 'bangumi_moe'

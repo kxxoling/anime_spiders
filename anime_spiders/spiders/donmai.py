@@ -50,6 +50,14 @@ class DonmaiHotSpider(Spider):
     tags = 'order:rank'
 
     def parse(self, rsp):
+        """ Parse CG items from xml
+
+        @url http://danbooru.donmai.us/posts.xml?page=1&tags=order%3Arank
+        @returns items 1 100
+        @scraps crawled_from site_pk large_file_url file_url source md5
+            pixiv_id donmai_uploader_id rating fav_count score
+            character_tags general_tags copyright_tags artist_tags
+        """
         posts = rsp.xpath('//posts/post')
         if not posts:
             return
@@ -93,6 +101,14 @@ class DonmaiMonthlyPopilarSpider(Spider):
     base_url = 'http://danbooru.donmai.us/posts.xml'
 
     def parse(self, rsp):
+        """ Parse CG items from xml
+
+        @url http://danbooru.donmai.us/explore/posts/popular.xml
+        @returns items 1 100
+        @scraps crawled_from site_pk large_file_url file_url source md5
+            pixiv_id donmai_uploader_id rating fav_count score
+            character_tags general_tags copyright_tags artist_tags
+        """
         for p in rsp.xpath('//posts/post'):
             cg = extract_donmai_rss(p)
             if not cg:

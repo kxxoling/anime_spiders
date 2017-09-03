@@ -47,7 +47,22 @@ class DaviantArtFileDownloadPipeline(object):
         file_url = item['large_file_url']
         domain = item['source'].split('/')[2]
         file_full_name = prepare_download(file_url, spider, file_dir=domain.replace('.', '_'))
-        print file_full_name
+        if not os.path.exists(file_full_name):
+            download_file(file_url, file_full_name, spider=spider)
+
+        item.instance.path = file_full_name.lstrip('.storage/')
+        return item
+
+
+class TwitterImageDownloadPipeline(object):
+    def process_item(self, item, spider):
+        file_url = item['large_file_url']
+        sub_folder, twitter_pk = item['path'].rsplit('_', 1)
+        ext = file_url.rsplit('.', 1)[-1]
+        folder_full_path = os.path.join('.storage/', 'twitter_com', sub_folder)
+        if not os.path.exists(folder_full_path):
+            os.makedirs(folder_full_path)
+        file_full_name = os.path.join(folder_full_path, '%s.%s' % (twitter_pk, ext))
         if not os.path.exists(file_full_name):
             download_file(file_url, file_full_name, spider=spider)
 

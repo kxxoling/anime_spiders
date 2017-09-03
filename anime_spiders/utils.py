@@ -3,11 +3,13 @@ import os
 
 import requests
 
+from .settings import DOWNLOAD_TIMEOUT
+
 
 def download_file(file_url, file_full_name, spider=None):
     try:
         with open(file_full_name, 'wb') as f:
-            for chunk in requests.get(file_url).iter_content(chunk_size=1024):
+            for chunk in requests.get(file_url, timeout=DOWNLOAD_TIMEOUT).iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
     except Exception as e:

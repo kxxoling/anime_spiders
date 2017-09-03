@@ -39,6 +39,8 @@
     :page-count="pagesCount",
     @current-change="fetchPage"
   )
+  md-pagination(:current-page.sync='page', :page-size='5', :total-records='50')
+
 </template>
 
 <script>

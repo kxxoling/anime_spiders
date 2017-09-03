@@ -3,12 +3,15 @@ import Meta from 'vue-meta';
 import 'normalize.css/normalize.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
+import VueMaterial from 'vue-material';
+import 'vue-material/dist/vue-material.css';
 import App from './App';
 import router from './router';
 import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(VueMaterial);
 Vue.use(Meta);
 
 /* eslint-disable no-new */

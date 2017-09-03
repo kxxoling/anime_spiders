@@ -1,22 +1,48 @@
 <template lang="jade">
-el-menu(theme="dark", mode="horizontal", router="true")
-  el-menu-item(index="/cg")
-    i.fa.fa-picture-o
-    | CG
-  el-menu-item(index="/anime")
-    i.fa.fa-imdb
-    | Anime
-  el-menu-item(index="/shortvideo")
-    i.fa.fa-video-camera
-    | Short Video
-  el-menu-item(index="/torrent")
-    i.fa.fa-download
-    | Torrent
-  el-menu-item.float-right(index="admin")
-    a(href="//localhost:8000/admin")
-      i.fa.fa-user
-      | Admin
+.nav
+  md-toolbar.md-fixed
+    md-button.md-icon-button(@click='toggleLeftSidenav')
+      md-icon menu
+    h2.md-title Anime Spiders FE
+  md-sidenav.md-fixed.md-left(
+    ref='leftSidenav',
+    @open="open('Left')",
+    @close="close('Left')"
+  )
+    md-toolbar.md-large
+      .md-toolbar-container
+        h2.md-title Navigation
+    md-list
+      md-list-item
+        router-link(to="/cg")
+          i.fa.fa-picture-o
+          | CG
+      md-list-item
+        router-link(to="/anime")
+          i.fa.fa-imdb
+          | Anime
+      md-list-item
+        router-link(exact to="/torrent")
+          i.fa.fa-download
+          | Torrent
+      md-list-item
+        router-link(exact to="/shortvideo")
+          i.fa.fa-video-camera
+          | Short Video
 </template>
+
+<script>
+export default {
+
+  methods: {
+    toggleLeftSidenav() {
+      this.$refs.leftSidenav.toggle();
+    },
+    open() {},
+    close() {},
+  },
+};
+</script>
 
 <style lang="stylus" scoped>
 i.fa

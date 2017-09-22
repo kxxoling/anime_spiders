@@ -1,6 +1,6 @@
 # coding: utf-8
-from urllib import urlencode
-from urlparse import urlparse, parse_qs
+from six.moves.urllib.parse import urlencode, urlparse, parse_qs
+
 import json
 
 from scrapy import Spider, Request

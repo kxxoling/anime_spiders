@@ -1,6 +1,6 @@
 # coding: utf-8
-from urlparse import urlparse, parse_qs
-from urllib import urlencode
+from six.moves.urllib.parse import urlencode, urlparse, parse_qs
+
 import datetime
 
 from scrapy import Spider, Request

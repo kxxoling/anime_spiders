@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import re
 
-from scrapy import Spider
+from scrapy import Spider, Request
 import requests
 
 from anime_spiders.items import CG
@@ -44,6 +44,67 @@ class PixivIllustSpider(Spider):
                 source=rsp.url,
             )
             order += 1
+
+
+class PixivUserSpider(Spider):
+    """
+    """
+    name = 'pixiv_user'
+    allowed_domains = ['pixiv.net']
+    start_urls = [
+    ]
+
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'anime_spiders.pipelines.PixivDownloadPipeline': 100,
+            'anime_spiders.pipelines.DjangoItemPipeline': 200,
+        },
+    }
+
+    def parse(self, rsp):
+        """ Parse CG items from gallery page
+
+        @url
+        @returns items 1 200
+        @scraps crawled_from site_pk large_file_url file_url source
+        """
+        last_illust = rsp.xpath('//div[@class="newindex"]//ul[contains(@class, "ui-brick")]/li//img/@src').extract_first()
+        last_illust_id = extract_pixiv_path(last_illust).get('pk')
+        next_illust_url = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=%s' % last_illust_id
+        yield Request(next_illust_url, callback=self.parse_illust)
+
+    def parse_illust(self, rsp):
+        """ Parse CG items from gallery page
+
+        @url
+        @returns items 1 200
+        @scraps crawled_from site_pk large_file_url file_url source
+        """
+        wrapper = rsp.xpath('//div[@id="wrapper"]')
+        wrapper_text = wrapper.extract()[0]
+        pixiv_data = extract_pixiv_path(wrapper_text)
+        pixiv_data.pop('order')
+        order = 0
+
+        while True:
+            large_file_url = 'https://i.pximg.net/img-original/img/{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'.format(order=order, **pixiv_data)
+            if requests.head(large_file_url, headers={'Referer': 'https://www.pixiv.net/'}).status_code == 404:
+                break
+            yield CG(
+                crawled_from='pixiv.net',
+                site_pk=pixiv_data['pk'],
+                large_file_url=large_file_url,
+                file_url=large_file_url,
+                source=rsp.url,
+            )
+            order += 1
+
+        works = rsp.xpath('//div[@id="wrapper"]//section[@class="works"]')[0]
+        next_works = works.xpath('ul/li[contains(@class, "selected_works")]/following-sibling::li/a/@href')
+        if next_works:
+            next_ = next_works.extract_first().rsplit('=')[-1]
+            next_url = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=%s' % next_
+            yield Request(next_url, callback=self.parse_illust)
 
 
 class PixivUserFirstPageSpider(Spider):

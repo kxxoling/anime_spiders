@@ -6,15 +6,19 @@ import requests
 from .settings import DOWNLOAD_TIMEOUT
 
 
-def download_file(file_url, file_full_name, spider=None):
+def download_file(file_url, file_full_name, spider=None, headers=None):
+    tmp_name = file_full_name + '.tmp'
     try:
-        with open(file_full_name, 'wb') as f:
-            for chunk in requests.get(file_url, timeout=DOWNLOAD_TIMEOUT).iter_content(chunk_size=1024):
+        with open(tmp_name, 'wb') as f:
+            rsp = requests.get(file_url, timeout=DOWNLOAD_TIMEOUT, headers=headers)
+            for chunk in rsp.iter_content(chunk_size=1024):
                 if chunk:
                     f.write(chunk)
     except Exception as e:
-        os.remove(file_full_name)
+        os.remove(tmp_name)
         raise e
+    else:
+        os.rename(tmp_name, file_full_name)
 
 
 def prepare_download(file_url, spider=None, file_dir=None):

@@ -159,3 +159,10 @@ class EHImageDownloadPipeline(object):
 
         download_file(image_url, file_full_name, spider=spider)
         return item
+
+
+class PixivDownloadPipeline(object):
+    def process_item(self, item, spider):
+        file_full_name = prepare_download(item['large_file_url'])
+        download_file(item['large_file_url'], file_full_name, headers={'Referer': 'https://www.pixiv.net/'})
+        return item

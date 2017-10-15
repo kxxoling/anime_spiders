@@ -36,14 +36,14 @@ class AcgRipSpider(Spider):
             team_title = i.xpath("td[@class='title']")[0]
             team_name = team_title.xpath('span[contains(@class,"label-team")]'
                                          '/a/text()').extract_first()
-            team_link = team_title.xpath(
-                'span[contains(@class,"label-team")]/a/@href').extract_first()
-            team_id = int(team_link.replace('/team/', '')) \
-                if team_link else None
-            topic_id = int(team_title
-                           .xpath('span[@class="title"]/a/@href')
-                           .extract_first().replace('/t/', ''))
-            title = team_title.xpath('span[@class="title"]/a/text()') \
+            team_link = team_title.xpath('span[contains(@class,"label-team")]/a/@href')\
+                                  .extract_first()
+            team_id = int(team_link.replace('/team/', '')) if team_link else None
+            topic_id = int(
+                team_title.xpath('span[@class="title"]/a/@href')
+                .extract_first().replace('/t/', '')
+            )
+            title = team_title.xpath('span[@class="title"]/a/text()')\
                               .extract_first()
             size = i.xpath("td[@class='size']/text()").extract_first()
             if 'MB' in size:
@@ -67,7 +67,7 @@ class AcgRipSpider(Spider):
     def get_next_url(self, rsp):
         current_url = rsp.url
         page = int(current_url.replace('https://acg.rip/page/', ''))
-        next_url = '{}page/{}'.format(self.base_url, page+1)
+        next_url = '{}page/{}'.format(self.base_url, page + 1)
         return next_url
 
     def get_full_url(self, url):

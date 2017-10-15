@@ -10,8 +10,7 @@ from anime_spiders.items import CG
 class PixivIllustSpider(Spider):
     name = 'pixiv_illust'
     allowed_domains = ['pixiv.net']
-    start_urls = [
-    ]
+    start_urls = []
 
     custom_settings = {
         'ITEM_PIPELINES': {
@@ -33,8 +32,12 @@ class PixivIllustSpider(Spider):
         pixiv_data.pop('order')
         order = 0
         while True:
-            large_file_url = 'https://i.pximg.net/img-original/img/{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'.format(order=order, **pixiv_data)
-            if requests.head(large_file_url, headers={'Referer': 'https://www.pixiv.net/'}).status_code == 404:
+            large_file_url = 'https://i.pximg.net/img-original/img/'\
+                             '{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'\
+                             .format(order=order, **pixiv_data)
+            if requests.head(
+                large_file_url, headers={'Referer': 'https://www.pixiv.net/'}
+            ).status_code == 404:
                 break
             yield CG(
                 crawled_from='pixiv.net',
@@ -51,8 +54,7 @@ class PixivUserSpider(Spider):
     """
     name = 'pixiv_user'
     allowed_domains = ['pixiv.net']
-    start_urls = [
-    ]
+    start_urls = []
 
     custom_settings = {
         'ITEM_PIPELINES': {
@@ -68,7 +70,9 @@ class PixivUserSpider(Spider):
         @returns items 1 200
         @scraps crawled_from site_pk large_file_url file_url source
         """
-        last_illust = rsp.xpath('//div[@class="newindex"]//ul[contains(@class, "ui-brick")]/li//img/@src').extract_first()
+        last_illust = rsp.xpath(
+            '//div[@class="newindex"]//ul[contains(@class, "ui-brick")]/li//img/@src'
+        ).extract_first()
         last_illust_id = extract_pixiv_path(last_illust).get('pk')
         next_illust_url = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=%s' % last_illust_id
         yield Request(next_illust_url, callback=self.parse_illust)
@@ -87,8 +91,12 @@ class PixivUserSpider(Spider):
         order = 0
 
         while True:
-            large_file_url = 'https://i.pximg.net/img-original/img/{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'.format(order=order, **pixiv_data)
-            if requests.head(large_file_url, headers={'Referer': 'https://www.pixiv.net/'}).status_code == 404:
+            large_file_url = 'https://i.pximg.net/img-original/img/'\
+                             '{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'\
+                             .format(order=order, **pixiv_data)
+            if requests.head(
+                large_file_url, headers={'Referer': 'https://www.pixiv.net/'}
+            ).status_code == 404:
                 break
             yield CG(
                 crawled_from='pixiv.net',
@@ -100,7 +108,9 @@ class PixivUserSpider(Spider):
             order += 1
 
         works = rsp.xpath('//div[@id="wrapper"]//section[@class="works"]')[0]
-        next_works = works.xpath('ul/li[contains(@class, "selected_works")]/following-sibling::li/a/@href')
+        next_works = works.xpath(
+            'ul/li[contains(@class, "selected_works")]/following-sibling::li/a/@href'
+        )
         if next_works:
             next_ = next_works.extract_first().rsplit('=')[-1]
             next_url = 'https://www.pixiv.net/member_illust.php?mode=medium&illust_id=%s' % next_
@@ -113,8 +123,7 @@ class PixivUserFirstPageSpider(Spider):
     """
     name = 'pixiv_user_1p'
     allowed_domains = ['pixiv.net']
-    start_urls = [
-    ]
+    start_urls = []
 
     custom_settings = {
         'ITEM_PIPELINES': {
@@ -130,20 +139,26 @@ class PixivUserFirstPageSpider(Spider):
         @returns items 1 200
         @scraps crawled_from site_pk large_file_url file_url source
         """
-        preview_images = rsp.xpath('//div[@class="newindex"]//ul[contains(@class, "ui-brick")]/li//img/@src').extract()
+        preview_images = rsp.xpath(
+            '//div[@class="newindex"]//ul[contains(@class, "ui-brick")]/li//img/@src'
+        ).extract()
         for image in preview_images:
             pixiv_data = extract_pixiv_path(image)
-            large_file_url = 'https://i.pximg.net/img-original/img/{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'.format(**pixiv_data)
+            large_file_url = 'https://i.pximg.net/img-original/img/'\
+                             '{year}/{month}/{day}/{hour}/{minute}/{second}/{pk}_p{order}.jpg'\
+                             .format(**pixiv_data)
             yield CG(
                 crawled_from='pixiv.net',
                 site_pk=pixiv_data['pk'],
                 large_file_url=large_file_url,
                 file_url=large_file_url,
-                source='https://www.pixiv.net/member_illust.php?mode=medium&illust_id={pk}'.format(**pixiv_data),
+                source='https://www.pixiv.net/member_illust.php?mode=medium&illust_id={pk}'\
+                       .format(**pixiv_data),
             )
 
 
-pixiv_ptn = re.compile(r'''
+pixiv_ptn = re.compile(
+    r'''
 https://i.pximg.net/c/\d{3,4}x\d{3,4}.{0,4}/img-master/img/
 (?P<year>\d+)/
 (?P<month>\d+)/
@@ -156,7 +171,8 @@ _p(?P<order>\d{1,3})_
 (master|square)
 \d{3,5}
 \.?(?P<ext> jpg|png|jpeg)
-''', re.VERBOSE)
+''', re.VERBOSE
+)
 
 
 def extract_pixiv_path(square_path_wrapper):

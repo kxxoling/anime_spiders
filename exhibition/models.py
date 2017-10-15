@@ -25,17 +25,17 @@ class TaggedCompany(GenericTaggedItemBase):
 
 def camel_case(s):
     words = s.split('_')
-    return ''.join(map(
-        lambda s: s.capitalize(),
-        words))
+    return ''.join(map(lambda s: s.capitalize(), words))
 
 
 def tagged_as(name, verbose_name=None):
     name = 'Tagged' + camel_case(name)
-    _tagged = type(name, (GenericTaggedItemBase,), {
-        'tag': ForeignKey(Tag, related_name='%(app_label)s_%(class)s_'+name),
-        '__module__': 'exhibition.models',
-    })
+    _tagged = type(
+        name, (GenericTaggedItemBase, ), {
+            'tag': ForeignKey(Tag, related_name='%(app_label)s_%(class)s_' + name),
+            '__module__': 'exhibition.models',
+        }
+    )
 
     manager = TaggableManager(through=_tagged, verbose_name=verbose_name or name)
     manager.rel.related_name = "+"
@@ -44,20 +44,18 @@ def tagged_as(name, verbose_name=None):
 
 
 class Model(_Model):
+
     class Meta:
         abstract = True
-        unique_together = (
-            ('crawled_from', 'site_pk'),
-        )
-        ordering = ('-id',)
+        unique_together = (('crawled_from', 'site_pk'), )
+        ordering = ('-id', )
 
     crawled_from = CharField(max_length=100)
     site_pk = IntegerField()
     tags = TaggableManager(through=Tagged, verbose_name='tags')
 
     def __unicode__(self):
-        return u'<%s: %s from %s>' % (
-            self.__class__.__name__, self.site_pk, self.crawled_from)
+        return u'<%s: %s from %s>' % (self.__class__.__name__, self.site_pk, self.crawled_from)
 
 
 class Torrent(Model):
@@ -90,7 +88,7 @@ class CG(Model):
     path = CharField(max_length=200, null=True)
 
     donmai_uploader_id = IntegerField(null=True)
-    rating = CharField(max_length=5, null=True)   # s e q
+    rating = CharField(max_length=5, null=True)    # s e q
     fav_count = IntegerField(null=False, default=0)
     score = IntegerField(null=False, default=0)
 
@@ -134,8 +132,7 @@ class Anime(Model):
     episodes = TextField(null=True, default=None)
 
     def __unicode__(self):
-        return u'<%s: %s from %s>' % (
-            self.__class__.__name__, self.name, self.crawled_from)
+        return u'<%s: %s from %s>' % (self.__class__.__name__, self.name, self.crawled_from)
 
 
 class ShortVideo(Model):

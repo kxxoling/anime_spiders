@@ -5,19 +5,20 @@ import django
 
 from .utils import download_file, prepare_download
 
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "exhibition.settings")
 
 django.setup()
 
 
 class DjangoItemPipeline(object):
+
     def process_item(self, item, spider):
         item.save()
         return item
 
 
 class CGTagsPipeline(object):
+
     def process_item(self, item, spider):
         general_tags = item['general_tags'].split(' ')
         artist_tags = item['general_tags'].split(' ')
@@ -31,6 +32,7 @@ class CGTagsPipeline(object):
 
 
 class DonmaiFileDownloadPipeline(object):
+
     def process_item(self, item, spider):
         file_url = item['large_file_url']
         file_full_name = prepare_download(file_url, spider)
@@ -43,6 +45,7 @@ class DonmaiFileDownloadPipeline(object):
 
 
 class DaviantArtFileDownloadPipeline(object):
+
     def process_item(self, item, spider):
         file_url = item['large_file_url']
         domain = item['source'].split('/')[2]
@@ -55,6 +58,7 @@ class DaviantArtFileDownloadPipeline(object):
 
 
 class TwitterImageDownloadPipeline(object):
+
     def process_item(self, item, spider):
         file_url = item['large_file_url']
         sub_folder, twitter_pk = item['path'].rsplit('_', 1)
@@ -71,6 +75,7 @@ class TwitterImageDownloadPipeline(object):
 
 
 class AnimeTagsPipeline(object):
+
     def process_item(self, item, spider):
         item.instance.assit_companies.add(*item['assit_companies'])
         tag_fields = [
@@ -95,6 +100,7 @@ class AnimeTagsPipeline(object):
 
 
 class ShortVideoTagsPipeline(object):
+
     def process_item(self, item, spider):
         tags = item['tags_string'].split(' ')
         item.instance.tags.add(*tags)
@@ -102,6 +108,7 @@ class ShortVideoTagsPipeline(object):
 
 
 class BangumiTVCoverPipeline(object):
+
     def process_item(self, item, spider):
         cover_url = item['cover']
         if not cover_url:
@@ -116,6 +123,7 @@ class BangumiTVCoverPipeline(object):
 
 
 class TorrentDownloadPipeline(object):
+
     def process_item(self, item, spider):
         if not item['torrent']:
             return item
@@ -131,6 +139,7 @@ class TorrentDownloadPipeline(object):
 
 
 class ShortVideoDownloadPipeline(object):
+
     def process_item(self, item, spider):
         if item['file_url']:
             file_full_name = prepare_download(item['file_url'], spider)
@@ -147,6 +156,7 @@ class ShortVideoDownloadPipeline(object):
 
 
 class EHImageDownloadPipeline(object):
+
     def process_item(self, item, spider):
         image_url = item['url']
         file_name = image_url.rsplit('/', 1)[-1]
@@ -162,7 +172,10 @@ class EHImageDownloadPipeline(object):
 
 
 class PixivDownloadPipeline(object):
+
     def process_item(self, item, spider):
         file_full_name = prepare_download(item['large_file_url'])
-        download_file(item['large_file_url'], file_full_name, headers={'Referer': 'https://www.pixiv.net/'})
+        download_file(
+            item['large_file_url'], file_full_name, headers={'Referer': 'https://www.pixiv.net/'}
+        )
         return item

@@ -32,7 +32,8 @@ class DeviantartGallerySpider(scrapy.Spider):
         @returns items 1 40
         @scraps crawled_from site site_pk large_file_url file_url source
         """
-        arts = rsp.xpath('//span[@class="thumb wide"]/a[@class="torpedo-thumb-link"]/@href').extract()
+        arts = rsp.xpath('//span[@class="thumb wide"]/a[@class="torpedo-thumb-link"]/@href'
+                         ).extract()
         for art in arts:
             yield Request(art, callback=self.parse_image)
 
@@ -40,11 +41,12 @@ class DeviantartGallerySpider(scrapy.Spider):
         gallery_id = rsp.url.split('/')[4]
         username = rsp.url.split('/')[2].split('.')[0]
         for cg in [
-            FormRequest('http://www.deviantart.com/dapi/v1/gallery/'
-                        + gallery_id + '?iid=0&mp=1',
-                        formdata=dict(username=username, offset='24',
-                                      limit='24', _csrf=csrf, dapiIid='0'),
-                        callback=self.parse_json)]:
+            FormRequest(
+                'http://www.deviantart.com/dapi/v1/gallery/' + gallery_id + '?iid=0&mp=1',
+                formdata=dict(username=username, offset='24', limit='24', _csrf=csrf, dapiIid='0'),
+                callback=self.parse_json
+            )
+        ]:
             yield cg
 
     def parse_json(self, rsp):
@@ -67,7 +69,8 @@ class DeviantartGallerySpider(scrapy.Spider):
         """
         url = rsp.url
         site_pk = url.split('/')[4].split('-')[-1]
-        file_url = large_file_url = rsp.xpath('//img[@class="dev-content-full "]/@src').extract_first()
+        file_url = large_file_url = rsp.xpath('//img[@class="dev-content-full "]/@src')\
+                                       .extract_first()
         return CG(
             crawled_from='deviantart.com',
             site_pk=site_pk,

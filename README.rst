@@ -12,8 +12,11 @@ Supported sites:
 - Anime infomation crawler for bangumi.tv
 
 
+Development
+===========
+
 Structure
-=========
+---------
 
 .. code-block::
 
@@ -36,12 +39,8 @@ Structure
     ├── dist                # Distribution code of frontend
     └── static              # Frontend related static files
 
-
-Usage
-=====
-
-Development
------------
+Installation & Running
+----------------------
 
 * Run frontend: ``npm run dev``;
 * Run backend: ``./manage.py runserver``;
@@ -49,6 +48,17 @@ Development
     * Start a ElasticSearch server at ``192.168.2.10``;
     * Install requirements: ``pipenv install && pipenv install --dev && pipenv shell``;
     * Run spider ``scrapy crawl [spider_name]``;
+
+Clean code
+----------
+
+Use ``yapf`` to format Python code::
+
+    yapf -irp -e "./.venv/**" -e "**/migrations/**" **/**.py
+
+
+Usage
+=====
 
 Terminal
 --------

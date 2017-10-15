@@ -14,7 +14,6 @@ BOT_NAME = 'anime_spiders'
 SPIDER_MODULES = ['anime_spiders.spiders']
 NEWSPIDER_MODULE = 'anime_spiders.spiders'
 
-
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 # USER_AGENT = 'anime_spiders (+http://www.yourdomain.com)'
 
@@ -31,7 +30,6 @@ CONCURRENT_REQUESTS_PER_IP = 16
 # See also autothrottle settings and docs
 DOWNLOAD_DELAY = 0.25
 DOWNLOAD_TIMEOUT = 60
-
 
 # Disable cookies (enabled by default)
 COOKIES_ENABLED = False
@@ -60,7 +58,7 @@ TELNETCONSOLE_ENABLED = True
 # Enable or disable extensions
 # See http://scrapy.readthedocs.org/en/latest/topics/extensions.html
 EXTENSIONS = {
-   'scrapy.extensions.telnet.TelnetConsole': None,
+    'scrapy.extensions.telnet.TelnetConsole': None,
 }
 
 # Configure item pipelines

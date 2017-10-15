@@ -9,6 +9,7 @@ class AnimeIndex(SearchIndex, Indexable):
     text = CharField(document=True)
     name = CharField(model_attr='name')
     orig_name = CharField(model_attr='orig_name', null=True)
+
     # pub_date = DateTimeField(model_attr='pub_date', null=True)
 
     def get_model(self):

@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from scrapy import Spider, Request
+
 # from scrapy.contrib.spiders.init import InitSpider
 
 
 class EHGallerySpider(Spider):
     name = 'eh_gallery'
     allowed_domains = ['e-hentai.org']
-    start_urls = [
-    ]
+    start_urls = []
 
     custom_settings = {
         'ROBOTSTXT_OBEY': False,
@@ -38,7 +38,11 @@ class EHGallerySpider(Spider):
         """
         image_pages = rsp.xpath('//div[@class="gdtm"]//a/@href').extract()
         for image_page in image_pages:
-            yield Request(image_page, callback=self.parse_image_page, meta={'dir': dir_name or rsp.meta['dir']})
+            yield Request(
+                image_page,
+                callback=self.parse_image_page,
+                meta={'dir': dir_name or rsp.meta['dir']}
+            )
 
     def parse_image_page(self, rsp):
         """ Parse image dict from page
@@ -70,9 +74,5 @@ class ExGallerySpider(EHGallerySpider):
     dir_name = None
 
     def make_requests_from_url(self, url):
-        cookies = {
-            'ipb_member_id': '',
-            'ipb_pass_hash': '',
-            'ipb_session_id': ''
-        }
+        cookies = {'ipb_member_id': '', 'ipb_pass_hash': '', 'ipb_session_id': ''}
         return Request(url, dont_filter=True, cookies=cookies)

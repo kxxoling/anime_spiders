@@ -1,24 +1,27 @@
 # -*- coding: utf-8 -*-
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "exhibition.settings")
-import django       # noqa
+import django    # noqa
 django.setup()
 
-from scrapy import Field                    # noqa
+from scrapy import Field    # noqa
 from scrapy_djangoitem import DjangoItem    # noqa
 
-from exhibition import models               # noqa
+from exhibition import models    # noqa
 
 
 class BasicItem(DjangoItem):
+
     @property
     def instance(self):
         if self._instance is None:
             self._instance, _ = self.django_model.objects.get_or_create(
-                site_pk=self['site_pk'],
-                crawled_from=self['crawled_from'])
-            modelargs = dict((k, self.get(k)) for k in self._values
-                             if k in self._model_fields and not isinstance(self.get(k), list))
+                site_pk=self['site_pk'], crawled_from=self['crawled_from']
+            )
+            modelargs = dict(
+                (k, self.get(k)) for k in self._values
+                if k in self._model_fields and not isinstance(self.get(k), list)
+            )
             for k, v in modelargs.items():
                 setattr(self._instance, k, v)
         return self._instance

@@ -125,10 +125,9 @@ class DonmaiMonthlyPopilarSpider(Spider):
         new_args = {}
         date = datetime.datetime.strptime(args['date'][0], '%Y-%m-%d')
         if date.month == 1:
-            prev_month = '{}-{}-{}'.format(date.year-1, 12, date.day)
+            prev_month = '{}-{}-{}'.format(date.year - 1, 12, date.day)
         else:
-            prev_month = '{}-{}-{}'.format(
-                date.year, date.month-1, date.day)
+            prev_month = '{}-{}-{}'.format(date.year, date.month - 1, date.day)
         new_args['date'] = prev_month
         next_url = '{}?{}'.format(self.base_url, urlencode(new_args))
         return next_url

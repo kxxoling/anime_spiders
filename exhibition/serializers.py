@@ -5,6 +5,7 @@ from exhibition.models import CG, Anime, ShortVideo, Torrent
 
 
 class CGSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = CG
         exclude = ()
@@ -16,6 +17,7 @@ class CGViewset(viewsets.ModelViewSet):
 
 
 class AnimeSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Anime
         exclude = ()
@@ -27,6 +29,7 @@ class AnimeViewset(viewsets.ModelViewSet):
 
 
 class TorrentSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Torrent
         exclude = ()
@@ -38,6 +41,7 @@ class TorrentViewset(viewsets.ModelViewSet):
 
 
 class ShortVideoSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = ShortVideo
         exclude = ()

@@ -7,8 +7,7 @@ from anime_spiders.items import CG
 class TwitterPostSpider(scrapy.Spider):
     name = "twitter_post"
     allowed_domains = ["twtter.com"]
-    start_urls = [
-    ]
+    start_urls = []
     custom_settings = {
         'ITEM_PIPELINES': {
             'anime_spiders.pipelines.TwitterImageDownloadPipeline': 150,
@@ -25,9 +24,11 @@ class TwitterPostSpider(scrapy.Spider):
         """
 
         username = rsp.url.split('/')[3]
-        images = rsp.xpath('//div[@class="permalink-inner permalink-tweet-container"]'
-                           '//div[@class="AdaptiveMediaOuterContainer"]'
-                           '//img/@src').extract()
+        images = rsp.xpath(
+            '//div[@class="permalink-inner permalink-tweet-container"]'
+            '//div[@class="AdaptiveMediaOuterContainer"]'
+            '//img/@src'
+        ).extract()
         # text = rsp.xpath('//div[@class="permalink-inner permalink-tweet-container"]'
         #                  '//p[contains(@class, "tweet-text")]/text()').extract_first()
         twitter_pk = int(rsp.url.split('/')[-1])

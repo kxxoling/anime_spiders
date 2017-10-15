@@ -41,9 +41,7 @@ class BangumiMoeFeedSpider(XMLFeedSpider):
             item['team_name'] = item['title'].split(u'[')[1].split(u']')[0]
         item['torrent'] = node.xpath('enclosure/@url').extract_first()
         item['link'] = node.xpath('link/text()').extract_first()
-        item['pub_date'] = dateutil.parser.parse(
-            node.xpath('pubDate/text()').extract_first()
-        )
+        item['pub_date'] = dateutil.parser.parse(node.xpath('pubDate/text()').extract_first())
         item['site_pk'] = time.mktime(item['pub_date'].timetuple())
         try:
             item['category'] = item['title'].split('(')[-1].split(')')[0]

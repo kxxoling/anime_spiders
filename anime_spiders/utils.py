@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-
+import logging
 import requests
 from django.core.files import File as DjangoFile
 from filer.models.imagemodels import Image
@@ -8,8 +8,10 @@ from filer.models.foldermodels import Folder
 
 from .settings import DOWNLOAD_TIMEOUT
 
+logger = logging.getLogger()
 
-def download_file(file_url, file_full_name, spider=None, headers=None):
+
+def download_file(file_url, file_full_name, headers=None):
     tmp_name = file_full_name + '.tmp'
     try:
         with open(tmp_name, 'wb') as f:
@@ -28,7 +30,7 @@ def prepare_download(file_url, spider=None, file_dir=None):
     if not file_url:
         return
     if not file_url.startswith('http'):
-        spider.logger.warn(
+        logger.warn(
             'Spider arg will be removed later, please add http or https to file_url.'
         )
         file_url = spider.get_full_url(file_url)

@@ -1,6 +1,7 @@
 # Media files
 media
 static/CACHE
+filer_public
 
 charcoal/settings/prod.py
 

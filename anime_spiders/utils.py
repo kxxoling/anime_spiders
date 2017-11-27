@@ -2,6 +2,9 @@
 import os
 
 import requests
+from django.core.files import File as DjangoFile
+from filer.models.imagemodels import Image
+from filer.models.foldermodels import Folder
 
 from .settings import DOWNLOAD_TIMEOUT
 
@@ -25,6 +28,9 @@ def prepare_download(file_url, spider=None, file_dir=None):
     if not file_url:
         return
     if not file_url.startswith('http'):
+        spider.logger.warn(
+            'Spider arg will be removed later, please add http or https to file_url.'
+        )
         file_url = spider.get_full_url(file_url)
     url_domain = file_url.lstrip('http://').lstrip('https://')\
                          .lstrip('//').split('/')[0]
@@ -40,3 +46,15 @@ def prepare_download(file_url, spider=None, file_dir=None):
 
     file_full_name = os.path.join(file_dir, file_name)
     return file_full_name
+
+
+def save_to_django_filer(folder_name, file_full_name, instance, field_name):
+    file_name = file_full_name.rsplit('/')[-1]
+    with open(file_full_name, mode='rb') as f:
+        file = DjangoFile(f, name=file_name)
+        folder, _ = Folder.objects.get_or_create(name=folder_name)
+        image = Image.objects.create(original_filename=file_name, file=file)
+        image.folder = folder
+        image.save()
+        setattr(instance, field_name, image)
+        instance.save()

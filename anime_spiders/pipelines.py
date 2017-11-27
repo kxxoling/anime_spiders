@@ -3,7 +3,7 @@ import os
 
 import django
 
-from .utils import download_file, prepare_download
+from .utils import download_file, prepare_download, save_to_django_filer
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "exhibition.settings")
 
@@ -39,6 +39,7 @@ class DonmaiFileDownloadPipeline(object):
 
         if not os.path.exists(file_full_name):
             download_file('http://danbooru.donmai.us/' + file_url, file_full_name, spider=spider)
+            save_to_django_filer('danbooru_donmai_us', file_full_name, item.instance, 'file')
 
         item.instance.path = file_full_name.lstrip('.storage/')
         return item
@@ -52,6 +53,7 @@ class DaviantArtFileDownloadPipeline(object):
         file_full_name = prepare_download(file_url, spider, file_dir=domain.replace('.', '_'))
         if not os.path.exists(file_full_name):
             download_file(file_url, file_full_name, spider=spider)
+            save_to_django_filer(domain.replace('.', '_'), file_full_name, item.instance, 'file')
 
         item.instance.path = file_full_name.lstrip('.storage/')
         return item
@@ -69,6 +71,7 @@ class TwitterImageDownloadPipeline(object):
         file_full_name = os.path.join(folder_full_path, '%s.%s' % (twitter_pk, ext))
         if not os.path.exists(file_full_name):
             download_file(file_url, file_full_name, spider=spider)
+            save_to_django_filer('twitter_com', file_full_name, item.instance, 'file')
 
         item.instance.path = file_full_name.lstrip('.storage/')
         return item
@@ -118,6 +121,7 @@ class BangumiTVCoverPipeline(object):
 
         if not os.path.exists(file_full_name):
             download_file(cover_url, file_full_name, spider=spider)
+            save_to_django_filer('bangumi_tv', file_full_name, item.instance, 'cover_file')
         item['cover_path'] = file_full_name.lstrip('.storage/')
         return item
 
@@ -134,6 +138,7 @@ class TorrentDownloadPipeline(object):
         if os.path.exists(file_full_name):
             return item
         download_file(torrent_url, file_full_name, spider=spider)
+        # TODO: Save file to django filer
         item['torrent_path'] = file_full_name.lstrip('.storage/')
         return item
 
@@ -145,12 +150,15 @@ class ShortVideoDownloadPipeline(object):
             file_full_name = prepare_download(item['file_url'], spider)
             if not os.path.exists(file_full_name):
                 download_file(item['file_url'], file_full_name, spider=spider)
+                # TODO: Save file to django filer
             item['file_path'] = file_full_name.lstrip('.storage/')
 
         if item['preview_url']:
             file_full_name = prepare_download(item['preview_url'], spider)
             if not os.path.exists(file_full_name):
                 download_file(item['preview_url'], file_full_name, spider=spider)
+                save_to_django_filer('sakuga', file_full_name, item.instance, 'preview')
+
             item['preview_path'] = file_full_name.lstrip('.storage/')
         return item
 
@@ -176,6 +184,9 @@ class PixivDownloadPipeline(object):
     def process_item(self, item, spider):
         file_full_name = prepare_download(item['large_file_url'])
         download_file(
-            item['large_file_url'], file_full_name, headers={'Referer': 'https://www.pixiv.net/'}
+            item['large_file_url'], file_full_name, headers={
+                'Referer': 'https://www.pixiv.net/'
+            }
         )
+        save_to_django_filer('pixiv_net', file_full_name, item.instance, 'file')
         return item

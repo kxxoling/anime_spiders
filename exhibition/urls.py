@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
+    url(r'^filer/', include('filer.urls')),
 ]
-
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static('storage/', document_root=os.path.join(settings.BASE_DIR, '.storage'))

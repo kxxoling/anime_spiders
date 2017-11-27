@@ -1,10 +1,30 @@
 # coding: utf-8
+import os
+
 from django.db.models import Model as _Model
 from django.db.models import ForeignKey
 from django.db.models import CharField, IntegerField, DateTimeField, TextField
+from django.db.models import SET_NULL, CASCADE
 
 from taggit.managers import TaggableManager
 from taggit.models import TagBase, GenericTaggedItemBase
+
+from filer.fields.image import FilerImageField
+from filer.fields.file import FilerFileField
+from filer.models.filemodels import File
+
+
+class Video(File):
+
+    @classmethod
+    def matches_file_type(cls, iname, ifile, request):
+        filename_extensions = ['.mov', '.mp4', '.avi', '.wmv']
+        ext = os.path.splitext(iname)[1].lower()
+        return ext in filename_extensions
+
+
+class FilerVideoField(FilerFileField):
+    default_model_class = Video
 
 
 class Tag(TagBase):
@@ -86,6 +106,7 @@ class CG(Model):
     md5 = CharField(max_length=100)
     pixiv_id = IntegerField(null=True, default=None)
     path = CharField(max_length=200, null=True)
+    file = FilerImageField(related_name='cgs', null=True, on_delete=SET_NULL)
 
     donmai_uploader_id = IntegerField(null=True)
     rating = CharField(max_length=5, null=True)    # s e q
@@ -107,6 +128,7 @@ class Anime(Model):
     pub_date = CharField(max_length=100)
 
     cover_path = CharField(max_length=100, null=True, default=None)
+    cover_file = FilerImageField(related_name='anime_covers', null=True, on_delete=SET_NULL)
 
     episode_length = IntegerField(null=True, default=None)
     alter_names = CharField(max_length=100, null=True, default=None)
@@ -148,3 +170,5 @@ class ShortVideo(Model):
 
     file_path = CharField(max_length=100, null=True)
     preview_path = CharField(max_length=100, null=True)
+    file = FilerVideoField(related_name='short_videos', null=True, on_delete=SET_NULL)
+    preview = FilerFileField(related_name='short_video_previews', null=True, on_delete=SET_NULL)
